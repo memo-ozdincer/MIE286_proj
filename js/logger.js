@@ -83,9 +83,8 @@ class Logger {
     try {
       await fetch(CONFIG.SHEET_ENDPOINT, {
         method: 'POST',
-        headers: { 'Content-Type': 'text/plain' },  // avoids CORS preflight
+        mode: 'no-cors',
         body: JSON.stringify(this.rows),
-        redirect: 'follow',
       });
       return { ok: true };
     } catch (err) {

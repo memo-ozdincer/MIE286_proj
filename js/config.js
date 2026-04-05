@@ -31,8 +31,8 @@ const CONFIG = Object.freeze({
   AUDIO_DURATION_MS: 200,
 
   // ── Trials ────────────────────────────────────────────────────
-  PRACTICE_TRIALS: 10,
-  BLOCK_TRIALS: 60,
+  PRACTICE_TRIALS: 5,
+  BLOCK_TRIALS: 30,
 
   // ── Outlier thresholds (ms) ───────────────────────────────────
   RT_MIN: 150,
