@@ -88,8 +88,8 @@ class Experiment {
         <li>Please use a <strong>mouse or trackpad</strong> (not a touchscreen) and ensure your <strong>audio is on</strong>.</li>
       </ul>
       <form id="consent-form" class="form-grid">
-        <label>Participant ID
-          <input id="pid" type="text" placeholder="e.g. P01" required>
+        <label>Name
+          <input id="pid" type="text" placeholder="e.g. John" required>
         </label>
         <label>Input Device
           <select id="device-type" required>
