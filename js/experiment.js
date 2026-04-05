@@ -53,6 +53,9 @@ class Experiment {
     this._totalHits   = 0;
     this._totalTrials = 0;
     this._bestStreak  = 0;
+
+    // Overridable trial count (set from consent form, defaults to CONFIG)
+    this._blockTrials = CONFIG.BLOCK_TRIALS;
   }
 
   // ═══════════════════════════════════════════════════════════════
@@ -88,12 +91,6 @@ class Experiment {
         <label>Participant ID
           <input id="pid" type="text" placeholder="e.g. P01" required>
         </label>
-        <label>Age Range
-          <select id="age-range" required>
-            <option value="">Select&hellip;</option>
-            <option>18-24</option><option>25-34</option><option>35-44</option><option>45+</option>
-          </select>
-        </label>
         <label>Input Device
           <select id="device-type" required>
             <option value="">Select&hellip;</option>
@@ -106,11 +103,10 @@ class Experiment {
             <option>Never</option><option>Rarely</option><option>Weekly</option><option>Daily</option>
           </select>
         </label>
-        <label>Condition Order
-          <select id="cond-order" required>
-            <option value="">Select&hellip;</option>
-            <option value="VA">Visual &rarr; Auditory</option>
-            <option value="AV">Auditory &rarr; Visual</option>
+        <label>Trial Count
+          <select id="trial-count">
+            <option value="30">30 trials (short)</option>
+            <option value="60">60 trials (full)</option>
           </select>
         </label>
         <button type="submit" class="btn">I Consent &mdash; Begin</button>
@@ -119,12 +115,16 @@ class Experiment {
 
     document.getElementById('consent-form').addEventListener('submit', e => {
       e.preventDefault();
-      this.conditionOrder = document.getElementById('cond-order').value;
+      // Randomize condition order
+      this.conditionOrder = Math.random() < 0.5 ? 'VA' : 'AV';
+      // Allow 30 or 60 trials
+      const trialCount = parseInt(document.getElementById('trial-count').value, 10);
+      this._blockTrials = trialCount;
       this.logger.setMeta(
         document.getElementById('pid').value.trim(),
         this.conditionOrder,
         {
-          ageRange:   document.getElementById('age-range').value,
+          ageRange:   '18-24',
           deviceType: document.getElementById('device-type').value,
           gamingFreq: document.getElementById('gaming-freq').value,
         },
@@ -153,7 +153,7 @@ class Experiment {
       <p>${taskLine}</p>
       <p><strong>Feedback:</strong> ${feedbackLine}</p>
       <p>You'll start with <strong>${CONFIG.PRACTICE_TRIALS} practice trials</strong>,
-         then complete <strong>${CONFIG.BLOCK_TRIALS} recorded trials</strong>.</p>
+         then complete <strong>${this._blockTrials} recorded trials</strong>.</p>
       <button class="btn" id="start-btn">Start Practice</button>
     `);
 
@@ -211,7 +211,7 @@ class Experiment {
   _startBlock(practice) {
     this.isPractice  = practice;
     this.trialIndex  = 0;
-    this.totalTrials = practice ? CONFIG.PRACTICE_TRIALS : CONFIG.BLOCK_TRIALS;
+    this.totalTrials = practice ? CONFIG.PRACTICE_TRIALS : this._blockTrials;
     this._score      = 0;
     this._streak     = 0;
     this._blockHits  = 0;

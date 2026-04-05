@@ -72,10 +72,10 @@ Cognitive Load Theory predicts that overloading one channel degrades performance
 \noindent\textbf{Feedback conditions.}
 \textcolor{olive}{\emph{Visual:} Flashing border (green for hit\,/\,red for miss, 120\,ms) + metrics on bottom (average RT, hit rate, mean radial error).} \textcolor{purple}{\emph{Auditory:} No Metrics (trial counter only); 200\,ms sound after click: high pitch\,=\,fast hit, medium\,=\,slow hit, low thud\,=\,miss.}
 
-\noindent\textbf{Procedure ($\sim$5\,min).}
-Consent\,$\to$\,instructions\,$\to$\,10 practice trials\,$\to$\,Block\,1 (60 trials)\,$\to$\, \\break\,$\to$\,Block\,2 (60 trials). Order either V$\to$A or\ A$\to$V.
+\noindent\textbf{Procedure ($\sim$5--8\,min).}
+Consent\,$\to$\,instructions\,$\to$\,5 practice trials\,$\to$\,Block\,1 (30 or 60 trials)\,$\to$\, \\break\,$\to$\,Block\,2 (30 or 60 trials). Condition order (V$\to$A or A$\to$V) is randomized per participant. Our final design uses \textbf{60 trials per block}: during pilot testing, streak mechanics and failure-grouping patterns were not visible with only 30 trials; 60 trials provided sufficient data for within-participant trend analysis while remaining within fatigue limits.
 
-\noindent\textbf{Controls.} Size of: target, canvas. $\#$ of trials, inter-trial interval, and instructions held constant. Randomize positions of targets. Accommodations per participant.
+\noindent\textbf{Controls.} Size of: target, canvas. $\#$ of trials, inter-trial interval, and instructions held constant. Randomize positions of targets. Condition order randomized to control for learning effects. Practice rounds ensure familiarity before recorded blocks. Accommodations per participant.
 
 \section*{4.\enspace Analysis Plan (R/RStudio)}
 \begin{enumerate}
