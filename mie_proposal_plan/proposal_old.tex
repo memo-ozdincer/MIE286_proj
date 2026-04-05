@@ -1,0 +1,104 @@
+\documentclass[12pt,letterpaper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage[round,authoryear]{natbib}
+\usepackage[hidelinks]{hyperref}
+
+\onehalfspacing
+
+\setlist[itemize]{leftmargin=*,noitemsep,topsep=1pt}
+\setlist[enumerate]{leftmargin=*,noitemsep,topsep=1pt}
+\titleformat{\section}{\large\bfseries}{\thesection}{0pt}{}
+\titlespacing*{\section}{0pt}{0.5ex}{0.2ex}
+\setlength{\bibsep}{0pt}
+\urlstyle{same}
+
+\newcommand{\placeholder}[1]{\textcolor{gray}{[\textit{#1}]}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries The Effect of Feedback Modality on Speed--Accuracy Tradeoff in Target-Selection Tasks\par}
+\vspace{0.15em}
+{\normalsize MIE~286 (Winter~2026) --- Term Project Proposal\par}
+\vspace{0.3em}
+{\normalsize
+\textbf{Team:} \placeholder{Team \#} \quad
+\textbf{Members:} \placeholder{Name 1}, \placeholder{Name 2}, \placeholder{Name 3}\par}
+{\normalsize \today\par}
+\end{center}
+\vspace{-0.2em}
+\hrule
+\vspace{0.4em}
+
+\section*{1. Project Overview}
+Rapid target-selection (pointing and clicking) tasks exhibit a speed--accuracy tradeoff and are commonly modeled with Fitts-style formulations \citep{fitts1954,mackenzie1992}. The tradeoff can be interpreted as people adjusting internal response criteria (``go faster'' vs.\ ``be more accurate'') \citep{heitz2014,ratcliff2008}. Theory and prior evidence suggest that presenting secondary information in the same modality as a primary task can increase interference, while distributing information across modalities can reduce competition for attention and working memory \citep{wickens2015,klingner_nd}. Auditory feedback can communicate performance without requiring additional visual sampling, and is widely used in augmented feedback/sonification contexts \citep{sigrist2013,hermann2011}. We will test whether feedback modality shifts the speed--accuracy tradeoff in a rapid clicking task.
+
+\noindent\textbf{Design summary:} IV = Feedback Type (visual vs.\ auditory); DVs = response time (ms) and radial error (px); within-subject with counterbalanced order; $N\ge 24$ adults (18+).
+
+\section*{2. Research Question and Hypotheses}
+\textbf{Research question:} Does real-time performance feedback modality (visual vs.\ auditory) influence the speed--accuracy tradeoff in a visual target-selection task?
+\begin{itemize}
+  \item \textbf{H1 (Speed):} Mean response time will be lower under auditory feedback than under visual feedback \citep{wickens2015}.
+  \item \textbf{H2 (Accuracy):} Auditory feedback will increase speed but slightly worsen accuracy (higher radial error), consistent with a classic speed--accuracy tradeoff \citep{heitz2014}.
+  \item \textbf{H3 (Tradeoff structure):} The RT--error relationship (correlation/slope) will differ by condition \citep{heitz2014}.
+\end{itemize}
+
+\section*{3. Methods}
+\textbf{Participants.} We will recruit at least 24 participants (18+), with normal/corrected vision and no self-reported hearing impairments. We will record age range and device type (mouse/trackpad).
+
+\textbf{Task and apparatus.} Participants complete a browser-based target-selection task on a fixed-size canvas (e.g., $800\times 500$ px). Each trial shows one circular target (fixed radius; e.g., 40 px) at a random location; participants click as quickly and accurately as possible \citep{mackenzie1992}. Click timestamps and coordinates are logged; the next target appears after a fixed inter-trial interval (e.g., 500 ms).
+
+\textbf{Feedback manipulation (two active conditions).}
+\begin{itemize}
+  \item \textbf{Visual feedback:} Color flash after each click (green hit / red miss) plus a small HUD showing running mean RT, hit rate, and mean radial error.
+  \item \textbf{Auditory feedback:} No HUD (trial counter only) plus a short tone after each click: high pitch fast hit, medium pitch slow hit, low ``thud'' miss; the fast/slow cutoff will be set from a short pilot \citep{hermann2011}.
+\end{itemize}
+
+\textbf{Procedure.} Consent and demographics $\rightarrow$ instructions $\rightarrow$ 10 practice trials $\rightarrow$ Block~1 (60 trials) $\rightarrow$ short break $\rightarrow$ Block~2 (60 trials). Condition order is counterbalanced by random assignment to Visual$\rightarrow$Auditory vs Auditory$\rightarrow$Visual.
+
+\textbf{Measures.} Response time (ms) is measured from target onset to click. Radial error (px) is the Euclidean distance from click to target center (hit if error $\le$ radius).
+
+\section*{4. Analysis Plan (R/RStudio)}
+\begin{enumerate}
+  \item \textbf{Cleaning:} exclude implausible RTs (e.g., $<$200 ms or $>$5000 ms); verify expected trial counts.
+  \item \textbf{Summary:} per participant$\times$condition compute mean RT, mean radial error, and hit rate.
+  \item \textbf{H1--H2:} paired $t$-tests (or Wilcoxon signed-rank if non-normal) comparing visual vs.\ auditory for mean RT and mean radial error.
+  \item \textbf{H3:} quantify RT--error association by condition (correlation) and test a moderation model \texttt{mean\_error} $\sim$ \texttt{mean\_rt} $\times$ \texttt{condition}.
+\end{enumerate}
+
+\begin{thebibliography}{9}\setlength{\itemsep}{0pt}
+\bibitem[Fitts(1954)]{fitts1954}
+Fitts, P.~M. (1954). The information capacity of the human motor system in controlling the amplitude of movement. \emph{Journal of Experimental Psychology}, 47(6), 381--391.
+
+\bibitem[MacKenzie(1992)]{mackenzie1992}
+MacKenzie, I.~S. (1992). Fitts' law as a research and design tool in human--computer interaction. \emph{Human--Computer Interaction}, 7(1), 91--139.
+
+\bibitem[Heitz(2014)]{heitz2014}
+Heitz, R.~P. (2014). The speed--accuracy tradeoff: history, physiology, methodology, and behavior. \emph{Frontiers in Neuroscience}, 8, 150.
+
+\bibitem[Ratcliff and McKoon(2008)]{ratcliff2008}
+Ratcliff, R., \& McKoon, G. (2008). The diffusion decision model: theory and data for two-choice decision tasks. \emph{Neural Computation}, 20(4), 873--922.
+
+\bibitem[Wickens et~al.(2015)]{wickens2015}
+Wickens, C.~D., Hollands, J.~G., Banbury, S., \& Parasuraman, R. (2015). \emph{Engineering Psychology and Human Performance} (4th ed.). Routledge.
+
+\bibitem[Sigrist et~al.(2013)]{sigrist2013}
+Sigrist, R., Rauter, G., Riener, R., \& Wolf, P. (2013). Augmented visual, auditory, haptic feedback in motor learning: A review. \emph{Psychonomic Bulletin \& Review}, 20(1), 21--53.
+
+\bibitem[Hermann et~al.(2011)]{hermann2011}
+Hermann, T., Hunt, A., \& Neuhoff, J.~G. (Eds.). (2011). \emph{The Sonification Handbook}. Logos Verlag.
+
+\bibitem[Klingner et~al.(n.d.)]{klingner_nd}
+Klingner, J., Tversky, B., \& Hanrahan, P. (n.d.). \emph{Aural vs.\ Visual Cognitive Load}. Available at \url{https://graphics.stanford.edu/papers/visual-cognitive-load/klingner_aural_vs_visual_cognitive_load.pdf} (accessed 2026-02-15).
+\end{thebibliography}
+
+\end{document}
