@@ -1,6 +1,9 @@
 /**
- * Collects per-trial data, exports as CSV, and optionally
- * auto-saves to a Google Sheet via Apps Script endpoint.
+ * Collects per-trial data, exports as CSV, and auto-saves
+ * to the GitHub repo's data/ directory via the Contents API.
+ *
+ * The GitHub token is read from the URL hash (#token=...) so it
+ * never appears in the source code or git history.
  */
 class Logger {
   constructor() {
@@ -72,23 +75,45 @@ class Logger {
   }
 
   /**
-   * POST all rows to the Google Sheets endpoint.
-   * Returns { ok: true } on success, { ok: false, msg } on failure.
-   * Silently skips if SHEET_ENDPOINT is not configured.
+   * Save CSV to the repo's data/ folder via GitHub Contents API.
+   * Token is read from the URL hash so it's never in source code.
    */
   async submit() {
-    if (!CONFIG.SHEET_ENDPOINT) {
-      return { ok: false, msg: 'No endpoint configured' };
+    const token = this._tokenFromHash();
+    if (!token) {
+      return { ok: false, msg: 'No token in URL' };
     }
+
+    const csv = this.toCSV();
+    const filename = `data/${this.participantId}_${Date.now()}.csv`;
+    const content = btoa(unescape(encodeURIComponent(csv)));
+
     try {
-      await fetch(CONFIG.SHEET_ENDPOINT, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: JSON.stringify(this.rows),
-      });
-      return { ok: true };
+      const resp = await fetch(
+        `https://api.github.com/repos/${CONFIG.GITHUB_REPO}/contents/${filename}`,
+        {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            message: `data: ${this.participantId}`,
+            content,
+          }),
+        },
+      );
+      return resp.ok
+        ? { ok: true }
+        : { ok: false, msg: `GitHub API ${resp.status}` };
     } catch (err) {
       return { ok: false, msg: err.message };
     }
+  }
+
+  /** Read token from URL hash: .../#token=github_pat_xxx */
+  _tokenFromHash() {
+    const m = window.location.hash.match(/token=([^&]+)/);
+    return m ? m[1] : '';
   }
 }

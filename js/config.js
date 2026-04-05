@@ -56,10 +56,10 @@ const CONFIG = Object.freeze({
   SCORE_SPEED_MAX: 150,        // max bonus for fast RT
   SCORE_ACCURACY_MAX: 75,      // max bonus for dead-centre hit
 
-  // ── Data endpoint ──────────────────────────────────────────────
-  // Paste your Google Apps Script web-app URL here after deploying.
-  // Leave empty to skip auto-save (participants download CSV instead).
-  SHEET_ENDPOINT: 'https://script.google.com/macros/s/AKfycbwlNDWEvBkSbeiTfRwD28VURvTCuyyRVeX4Uymz8AHtnBygxXFAiAZowOe-W0UyyBsU/exec',
+  // ── Data storage ───────────────────────────────────────────────
+  // CSVs are saved to the data/ directory via GitHub API.
+  // Pass the token in the URL hash: .../#token=github_pat_xxx
+  GITHUB_REPO: 'memo-ozdincer/MIE286_proj',
 
   // ── Effects ───────────────────────────────────────────────────
   PARTICLE_COUNT: 14,
