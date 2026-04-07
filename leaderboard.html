@@ -767,74 +767,80 @@ function renderPodium(sorted) {
 }
 
 function renderAwards(data) {
+  // val: extracts the comparable value from a player (used for tie detection)
+  // pick: returns sorted array (best first)
   const awards = allAwards = [
     { emoji:'⚡', label:'Speed Demon', cls:'speed',
-      pick: d => [...d].sort((a,b) => a.avgRT - b.avgRT)[0],
+      val: p => p.avgRT, pick: d => [...d].sort((a,b) => a.avgRT - b.avgRT),
       fmt: p => `${p.avgRT.toFixed(0)}ms avg` },
     { emoji:'🎯', label:'Sharpshooter', cls:'accuracy',
-      pick: d => [...d].sort((a,b) => b.hitRate - a.hitRate)[0],
+      val: p => p.hitRate, pick: d => [...d].sort((a,b) => b.hitRate - a.hitRate),
       fmt: p => `${p.hitRate.toFixed(1)}% hits` },
     { emoji:'🔥', label:'Hot Streak', cls:'streak',
-      pick: d => [...d].sort((a,b) => b.maxStreak - a.maxStreak)[0],
+      val: p => p.maxStreak, pick: d => [...d].sort((a,b) => b.maxStreak - a.maxStreak),
       fmt: p => `${p.maxStreak} hits in a row` },
     { emoji:'💀', label:'Cold Streak', cls:'red',
-      pick: d => [...d].sort((a,b) => b.maxMissStreak - a.maxMissStreak)[0],
+      val: p => p.maxMissStreak, pick: d => [...d].sort((a,b) => b.maxMissStreak - a.maxMissStreak),
       fmt: p => `${p.maxMissStreak} misses in a row` },
     { emoji:'🧊', label:'Ice Cold', cls:'ice',
-      pick: d => [...d].sort((a,b) => a.rtStdDev - b.rtStdDev)[0],
+      val: p => p.rtStdDev, pick: d => [...d].sort((a,b) => a.rtStdDev - b.rtStdDev),
       fmt: p => `σ = ${p.rtStdDev.toFixed(0)}ms` },
     { emoji:'💎', label:'Bullseye', cls:'sniper',
-      pick: d => [...d].filter(p => p.bestError < Infinity).sort((a,b) => a.bestError - b.bestError)[0],
+      val: p => p.bestError, pick: d => [...d].filter(p => p.bestError < Infinity).sort((a,b) => a.bestError - b.bestError),
       fmt: p => `${p.bestError.toFixed(1)}px closest` },
     { emoji:'💨', label:'Quick Draw', cls:'quick',
-      pick: d => [...d].sort((a,b) => a.fastestRT - b.fastestRT)[0],
+      val: p => p.fastestRT, pick: d => [...d].sort((a,b) => a.fastestRT - b.fastestRT),
       fmt: p => `${p.fastestRT.toFixed(0)}ms fastest click` },
     { emoji:'🐌', label:'Scenic Route', cls:'pink',
-      pick: d => [...d].sort((a,b) => b.avgRT - a.avgRT)[0],
+      val: p => p.avgRT, pick: d => [...d].sort((a,b) => b.avgRT - a.avgRT),
       fmt: p => `${p.avgRT.toFixed(0)}ms avg` },
     { emoji:'🎰', label:'Spray & Pray', cls:'streak',
-      pick: d => [...d].sort((a,b) => a.hitRate - b.hitRate)[0],
+      val: p => p.hitRate, pick: d => [...d].sort((a,b) => a.hitRate - b.hitRate),
       fmt: p => `${p.hitRate.toFixed(1)}% hit rate` },
     { emoji:'🎢', label:'Wild Card', cls:'orange',
-      pick: d => [...d].sort((a,b) => b.rtStdDev - a.rtStdDev)[0],
+      val: p => p.rtStdDev, pick: d => [...d].sort((a,b) => b.rtStdDev - a.rtStdDev),
       fmt: p => `σ = ${p.rtStdDev.toFixed(0)}ms variance` },
     { emoji:'🤖', label:'The Machine', cls:'ice',
-      pick: d => { const s = [...d].sort((a,b) => b.hitRate - a.hitRate); return s.find(p => p.rtStdDev < 120) || s[0]; },
+      val: p => p.hitRate + (1000 - p.rtStdDev),
+      pick: d => { const s = [...d].sort((a,b) => b.hitRate - a.hitRate); const m = s.find(p => p.rtStdDev < 120) || s[0]; return [m]; },
       fmt: p => `${p.hitRate.toFixed(0)}% @ σ${p.rtStdDev.toFixed(0)}ms` },
     { emoji:'🎯', label:'One Tap', cls:'red',
-      pick: d => [...d].sort((a,b) => b.oneClicks - a.oneClicks)[0],
+      val: p => p.oneClicks, pick: d => [...d].sort((a,b) => b.oneClicks - a.oneClicks),
       fmt: p => `${p.oneClicks} clicks under 300ms` },
     { emoji:'🧱', label:'Unbreakable', cls:'green',
-      pick: d => [...d].sort((a,b) => b.recoveries - a.recoveries)[0],
+      val: p => p.recoveries, pick: d => [...d].sort((a,b) => b.recoveries - a.recoveries),
       fmt: p => `${p.recoveries} hits after a miss` },
     { emoji:'😬', label:'Choke Artist', cls:'pink',
-      pick: d => [...d].sort((a,b) => b.chokes - a.chokes)[0],
+      val: p => p.chokes, pick: d => [...d].sort((a,b) => b.chokes - a.chokes),
       fmt: p => `${p.chokes} misses after 5+ streak` },
     { emoji:'🏁', label:'Strong Finish', cls:'green',
-      pick: d => [...d].sort((a,b) => b.closeRate - a.closeRate)[0],
+      val: p => p.closeRate, pick: d => [...d].sort((a,b) => b.closeRate - a.closeRate),
       fmt: p => `${p.closeRate.toFixed(0)}% hit rate in last 10` },
     { emoji:'🐢', label:'Slow Starter', cls:'orange',
-      pick: d => [...d].sort((a,b) => a.openRate - b.openRate)[0],
+      val: p => p.openRate, pick: d => [...d].sort((a,b) => a.openRate - b.openRate),
       fmt: p => `${p.openRate.toFixed(0)}% in first 10 trials` },
     { emoji:'📈', label:'Most Improved', cls:'accuracy',
-      pick: d => [...d].sort((a,b) => b.rtImprovement - a.rtImprovement)[0],
+      val: p => p.rtImprovement, pick: d => [...d].sort((a,b) => b.rtImprovement - a.rtImprovement),
       fmt: p => `${p.rtImprovement.toFixed(0)}ms faster in 2nd half` },
     { emoji:'😤', label:'Panic Clicker', cls:'pink',
-      pick: d => [...d].sort((a,b) => b.panicClicks - a.panicClicks)[0],
+      val: p => p.panicClicks, pick: d => [...d].sort((a,b) => b.panicClicks - a.panicClicks),
       fmt: p => `${p.panicClicks} clicks under 200ms` },
   ];
+
+  // getWinners is defined globally below
 
   // Build cards HTML
   let cards = '';
   for (const a of awards) {
-    const p = a.pick(data);
-    if (!p) continue;
+    const winners = getWinners(a, data);
+    if (winners.length === 0) continue;
+    const names = winners.map(p => `<span class="name-text">${esc(p.name)}</span>`).join(', ');
     cards += `
       <div class="award-card ${a.cls}">
         <div class="award-emoji">${a.emoji}</div>
         <div class="award-label">${a.label}</div>
-        <div class="award-name"><span class="name-text">${esc(p.name)}</span></div>
-        <div class="award-value">${a.fmt(p)}</div>
+        <div class="award-name">${names}</div>
+        <div class="award-value">${a.fmt(winners[0])}</div>
       </div>`;
   }
 
@@ -903,11 +909,19 @@ function renderRankings(data, byScore) {
 
 function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
+/** Return all players who tie for 1st in a given award. */
+function getWinners(award, data) {
+  const sorted = award.pick(data);
+  if (!sorted || sorted.length === 0) return [];
+  const bestVal = award.val(sorted[0]);
+  return sorted.filter(p => award.val(p) === bestVal);
+}
+
 /** Build superlative badge emojis for a player name. */
 function getBadges(name) {
   if (!allAwards.length || !allData.length) return '';
   return allAwards
-    .filter(a => { const w = a.pick(allData); return w && w.name === name; })
+    .filter(a => getWinners(a, allData).some(w => w.name === name))
     .map(a => `<span class="sup-badge">${a.emoji}<span class="sup-tip ${a.cls}">${a.label}</span></span>`)
     .join('');
 }
@@ -919,8 +933,7 @@ function showPlayer(name) {
 
   // Find which superlatives this player won
   const won = allAwards
-    .map(a => { const winner = a.pick(allData); return winner && winner.name === name ? a : null; })
-    .filter(Boolean);
+    .filter(a => getWinners(a, allData).some(w => w.name === name));
 
   const orderLabel = p.order === 'VA' ? 'Visual → Auditory' : 'Auditory → Visual';
 
