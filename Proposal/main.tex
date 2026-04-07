@@ -1,0 +1,109 @@
+\documentclass[12pt,letterpaper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\onehalfspacing
+
+\definecolor{accent}{HTML}{1A3C6E}
+
+\setlist[itemize]{leftmargin=1.5em,noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
+\setlist[enumerate]{leftmargin=1.5em,noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
+\titleformat{\section}{\normalsize\bfseries\color{accent}}{}{0pt}{}
+\titlespacing*{\section}{0pt}{0.5ex}{0.05ex}
+\setlength{\parindent}{15pt}
+\setlength{\parskip}{0.2em}
+\setlength{\fboxsep}{3.5pt}
+\setlength{\fboxrule}{0.4pt}
+
+\newcommand{\placeholder}[1]{\textcolor{gray}{[\textit{#1}]}}
+
+\begin{document}
+
+\begin{center}
+{\large\bfseries The Effect of Feedback Modality on Speed-Accuracy Tradeoff\\[0.05em]in a Visual Target-Selection Task\par}
+\vspace{0.05em}
+{\small MIE\,286 | Probability \& Statistics (Winter\,2026) | Project Proposal\par}
+\vspace{0.05em}
+{\small\textbf{Team:} Team 51 \hspace{0.6em}\textbf{Members:} Markiyan Konyk, Jessica Yi, Memo Ozdincer \hspace{0.6em}February 15, 2026\par}
+\end{center}
+\vspace{-0.8em}
+{\color{accent}\hrule height 0.5pt}
+\vspace{0.15em}
+
+\section*{1.\enspace Background and Motivation}
+\enspace Feedback is one of the most important interaction processes for a user in any UI design, from the quercus page shooting confetti when you submit something, to the hits in a video game. Feedback can be in different forms, like visual, tactile, audio... and Wickens' \textit{Multiple Resource Theory} posits these feedbacks use separate attentional channels and that when a visual task is paired with visual feedback interference increases [1,2].  
+Cognitive Load Theory predicts that overloading one channel degrades performance, while distributing across modalities reduces load [3]. For rapid pointing tasks described by Fitts' Law [4,\,5], such interference may shift the \emph{speed--accuracy tradeoff} (SAT), which represents a relationship where faster responses incur more errors [6]. Prior work shows auditory feedback can reduce time in visual pointing tasks [7] and support motor learning without overloading the visual channel [8], but whether it changes the SAT \emph{structure}, and how participants might balance speed against accuracy, remains to be explored.
+
+\section*{2.\enspace Research Question and Hypotheses}
+
+\textbf{RQ:} Does the type of feedback (visual vs auditory) change our "SAT" in our visual-target selection task and does mixing task and feedback channel help with deloading feedback?
+\begin{itemize}
+  \item \textbf{H\textsubscript{1} (Speed):} The average reaction time will be lower than other experiments when exposed to auditory feedback, because the brain prioritizes visual cues [1].
+  \item \textbf{H\textsubscript{2} (Accuracy):} The auditory feedback will provide a larger average "radial" error, meaning that the increase in speed will cost us accuracy [6].
+  \item \textbf{H\textsubscript{3} (Tradeoff):} The reaction time-error relationship will change. There will be a different tradeoff under auditory feedback [6].
+\end{itemize}
+
+\section*{3.\enspace Experimental Design and Methods}
+
+\noindent\fcolorbox{accent!50}{accent!3}{%
+\begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule}
+\small\renewcommand{\arraystretch}{1.0}%
+\begin{tabularx}{\linewidth}{@{}p{0.48\linewidth}X@{}}
+\textbf{IV:} Feedback Type (Visual vs.\ Auditory) & \textbf{Design:} Within-subject; counterbalanced order\\
+\textbf{DV\textsubscript{1}:} Response time (ms), onset to click & \textbf{Sample:} $N\!\ge\!24$ adults (18+); $\ge$12 per order\\
+\textbf{DV\textsubscript{2}:} Radial error (px), click-to-center dist. & \textbf{Trials:} 2 blocks\,$\times$\,60 (+10 practice)\\
+\end{tabularx}
+\end{minipage}}
+\\\\
+\noindent\textbf{Participants.} $\ge$24 adults (18+) with normal/corrected vision and no hearing impairments, recruited via convenience sampling (classmates, friends, family). We record age range, device type (mouse/trackpad), and gaming frequency as covariates. Convenience-sampling limitations will be discussed in the report.
+
+\noindent\textbf{Task.} We will set up target selection on the user's browser of canvas ($800\!\times\!500$\,px). They will see a circular target of radius 40\,px randomly on the screen; they will try to click on the target. The next target appears in 500\,ms; we log the coordinates and timestamps.
+
+\noindent\textbf{Feedback conditions.}
+\textcolor{olive}{\emph{Visual:} Flashing border (green for hit\,/\,red for miss, 120\,ms) + metrics on bottom (average RT, hit rate, mean radial error).} \textcolor{purple}{\emph{Auditory:} No Metrics (trial counter only); 200\,ms sound after click: high pitch\,=\,fast hit, medium\,=\,slow hit, low thud\,=\,miss.}
+
+\noindent\textbf{Procedure ($\sim$5\,min).}
+Consent\,$\to$\,instructions\,$\to$\,10 practice trials\,$\to$\,Block\,1 (60 trials)\,$\to$\, \\break\,$\to$\,Block\,2 (60 trials). Order either V$\to$A or\ A$\to$V.
+
+\noindent\textbf{Controls.} Size of: target, canvas. $\#$ of trials, inter-trial interval, and instructions held constant. Randomize positions of targets. Accommodations per participant.
+
+\section*{4.\enspace Analysis Plan (R/RStudio)}
+\begin{enumerate}
+  \item \textbf{Cleaning:} Exclude reaction time outliers (\,$<$\,200\,ms or $>$\,5\,s); verify num. trials.
+  \item \textbf{Aggregation:} Collect average reaction time, mean radial error, hit rate for each.
+  \item \textbf{Descriptives:} Means, SDs, medians; boxplots of RT and error; RT-vs-error scatterplot by condition.
+  \item \textbf{Assumptions:} Shapiro--Wilk on within-subject differences for both DVs.
+  \item \textbf{H\textsubscript{1}--H\textsubscript{2}:} Paired $t$-tests (Wilcoxon if non-normal); report $t$, $p$, Cohen's $d$.
+  \item \textbf{H\textsubscript{3}:} Pearson $r$ (RT vs.\ error) per condition; \texttt{error\,$\sim$\,RT\,$\times$\,condition}, any significant interaction\,$=$\, will show different SAT slopes.
+\end{enumerate}
+
+\noindent\textbf{Limitations.} Convenience sampling limits generalizability; device variability and audio environments may add noise (recorded as covariates); fixed difficulty may produce accuracy ceiling effects.
+
+\vspace{1em}
+{\color{accent}\hrule height 0.4pt}
+\vspace{0.1em}
+{\scriptsize\setlength{\parskip}{0pt}%
+\textbf{References}\par\vspace{-0.2em}
+\begin{enumerate}[label={[\arabic*]},leftmargin=1.5em,itemsep=0pt,parsep=0pt,topsep=0pt]
+  \item C.\,D.\ Wickens, ``Multiple resources and performance prediction,'' \emph{Theor.\ Issues Ergon.\ Sci.}, 3(2), 159--177, 2002.
+  \item C.\,D.\ Wickens, J.\,G.\ Hollands, S.\ Banbury, R.\ Parasuraman, \emph{Eng.\ Psychology \& Human Performance}, 4th\,ed., Routledge, 2015.
+  \item J.\ Sweller, ``Cognitive load during problem solving: Effects on learning,'' \emph{Cognitive Science}, 12(2), 257--285, 1988.
+  \item P.\,M.\ Fitts, ``The information capacity of the human motor system in controlling the amplitude of movement,'' \emph{J.\ Exp.\ Psychol.}, 47(6), 381--391, 1954.
+  \item I.\,S.\ MacKenzie, ``Fitts' law as a research and design tool in human--computer interaction,'' \emph{Hum.--Comput.\ Interact.}, 7(1), 91--139, 1992.
+  \item R.\,P.\ Heitz, ``The speed--accuracy tradeoff: History, physiology, methodology, and behavior,'' \emph{Front.\ Neurosci.}, 8, 150, 2014.
+  \item M.\ Akamatsu, I.\,S.\ MacKenzie, T.\ Hasbroucq, ``A comparison of tactile, auditory, and visual feedback in a pointing task using a mouse-type device,'' \emph{Ergonomics}, 38(4), 816--827, 1995.
+  \item R.\ Sigrist, G.\ Rauter, R.\ Riener, P.\ Wolf, ``Augmented visual, auditory, haptic, and multimodal feedback in motor learning: A review,'' \emph{Psychon.\ Bull.\ \& Rev.}, 20(1), 21--53, 2013.
+\end{enumerate}
+}
+
+\end{document}
