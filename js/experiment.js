@@ -103,12 +103,6 @@ class Experiment {
             <option>Never</option><option>Rarely</option><option>Weekly</option><option>Daily</option>
           </select>
         </label>
-        <label>Trial Count
-          <select id="trial-count">
-            <option value="30">30 trials (short)</option>
-            <option value="60">60 trials (full)</option>
-          </select>
-        </label>
         <button type="submit" class="btn">I Consent &mdash; Begin</button>
       </form>
     `);
@@ -117,9 +111,7 @@ class Experiment {
       e.preventDefault();
       // Randomize condition order
       this.conditionOrder = Math.random() < 0.5 ? 'VA' : 'AV';
-      // Allow 30 or 60 trials
-      const trialCount = parseInt(document.getElementById('trial-count').value, 10);
-      this._blockTrials = trialCount;
+      this._blockTrials = 60;
       this.logger.setMeta(
         document.getElementById('pid').value.trim(),
         this.conditionOrder,
