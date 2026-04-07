@@ -804,7 +804,7 @@ function renderAwards(data) {
       val: p => p.hitRate + (1000 - p.rtStdDev),
       pick: d => { const s = [...d].sort((a,b) => b.hitRate - a.hitRate); const m = s.find(p => p.rtStdDev < 120) || s[0]; return [m]; },
       fmt: p => `${p.hitRate.toFixed(0)}% @ σ${p.rtStdDev.toFixed(0)}ms` },
-    { emoji:'🎯', label:'One Tap', cls:'red',
+    { emoji:'🎯', label:'One Tap', cls:'red', hidden: true,
       val: p => p.oneClicks, pick: d => [...d].sort((a,b) => b.oneClicks - a.oneClicks),
       fmt: p => `${p.oneClicks} clicks under 300ms` },
     { emoji:'🧱', label:'Unbreakable', cls:'green',
@@ -813,7 +813,7 @@ function renderAwards(data) {
     { emoji:'😬', label:'Choke Artist', cls:'pink',
       val: p => p.chokes, pick: d => [...d].sort((a,b) => b.chokes - a.chokes),
       fmt: p => `${p.chokes} misses after 5+ streak` },
-    { emoji:'🏁', label:'Strong Finish', cls:'green',
+    { emoji:'🏁', label:'Strong Finish', cls:'green', hidden: true,
       val: p => p.closeRate, pick: d => [...d].sort((a,b) => b.closeRate - a.closeRate),
       fmt: p => `${p.closeRate.toFixed(0)}% hit rate in last 10` },
     { emoji:'🐢', label:'Slow Starter', cls:'orange',
@@ -832,6 +832,7 @@ function renderAwards(data) {
   // Build cards HTML
   let cards = '';
   for (const a of awards) {
+    if (a.hidden) continue;
     const winners = getWinners(a, data);
     if (winners.length === 0) continue;
     const names = winners.map(p => `<span class="name-text">${esc(p.name)}</span>`).join(', ');
