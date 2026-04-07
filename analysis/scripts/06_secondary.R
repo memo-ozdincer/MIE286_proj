@@ -74,4 +74,96 @@ var_test <- var.test(pm$mean_rt_visual, pm$mean_rt_auditory)
 cat("\nF-test for variance equality:\n")
 print(var_test)
 
+# ── Block 1 vs Block 2 (Practice/Fatigue Effect) ─────────────────
+cat("\n=== BLOCK COMPARISON ===\n")
+
+block_rt <- ct %>%
+  group_by(uid, block) %>%
+  summarise(mean_rt = mean(rt), mean_error = mean(error), .groups = "drop") %>%
+  pivot_wider(id_cols = uid, names_from = block,
+              values_from = c(mean_rt, mean_error))
+
+cat("Block 1 mean RT:", round(mean(block_rt$mean_rt_1, na.rm = TRUE), 1), "ms\n")
+cat("Block 2 mean RT:", round(mean(block_rt$mean_rt_2, na.rm = TRUE), 1), "ms\n")
+
+block_test <- t.test(block_rt$mean_rt_1, block_rt$mean_rt_2, paired = TRUE)
+cat("\nPaired t-test: Block 1 vs Block 2 RT\n")
+print(block_test)
+
+d_block <- (mean(block_rt$mean_rt_1, na.rm = TRUE) - mean(block_rt$mean_rt_2, na.rm = TRUE)) /
+           sd(block_rt$mean_rt_1 - block_rt$mean_rt_2, na.rm = TRUE)
+cat("Cohen's d =", round(d_block, 3), "\n")
+
+# ── Click Spatial Bias ───────────────────────────────────────────
+cat("\n=== CLICK SPATIAL BIAS ===\n")
+ct_miss <- ct %>% filter(hit == 0)
+cat("Total misses:", nrow(ct_miss), "\n")
+cat("Mean horizontal offset (click - target):", round(mean(ct_miss$click_x - ct_miss$target_x), 1), "px\n")
+cat("Mean vertical offset (click - target):", round(mean(ct_miss$click_y - ct_miss$target_y), 1), "px\n")
+cat("Mean miss distance:", round(mean(ct_miss$error), 1), "px\n")
+
+# ── Per-Participant SAT Slopes ───────────────────────────────────
+cat("\n=== PER-PARTICIPANT SAT SLOPES ===\n")
+
+pp_slopes <- ct %>%
+  group_by(uid, condition) %>%
+  summarise(slope = coef(lm(error ~ rt))[2], .groups = "drop") %>%
+  pivot_wider(names_from = condition, values_from = slope,
+              names_prefix = "slope_")
+
+cat("Visual SAT slope:   M =", round(mean(pp_slopes$slope_visual, na.rm=T), 5),
+    ", SD =", round(sd(pp_slopes$slope_visual, na.rm=T), 5), "\n")
+cat("Auditory SAT slope: M =", round(mean(pp_slopes$slope_auditory, na.rm=T), 5),
+    ", SD =", round(sd(pp_slopes$slope_auditory, na.rm=T), 5), "\n")
+
+slope_test <- t.test(pp_slopes$slope_visual, pp_slopes$slope_auditory, paired = TRUE)
+cat("\nPaired t-test on per-participant SAT slopes:\n")
+print(slope_test)
+
+# ── Leaderboard Effect (Pre vs Post) ────────────────────────────
+cat("\n=== LEADERBOARD EFFECT ===\n")
+# First ~21 files chronologically were pre-leaderboard
+file_times <- ct %>%
+  group_by(uid) %>%
+  summarise(source = first(source_file), .groups = "drop") %>%
+  mutate(timestamp = as.numeric(str_extract(source, "\\d{13}"))) %>%
+  arrange(timestamp) %>%
+  mutate(rank = row_number())
+
+# Mark first 21 as pre-leaderboard
+pre_lb_uids <- file_times$uid[1:min(21, nrow(file_times))]
+ct$leaderboard <- ifelse(ct$uid %in% pre_lb_uids, "Pre-leaderboard", "Post-leaderboard")
+
+lb_summary <- ct %>%
+  group_by(leaderboard) %>%
+  summarise(
+    n_participants = n_distinct(uid),
+    mean_rt = mean(rt), mean_error = mean(error),
+    hit_rate = mean(hit) * 100, .groups = "drop"
+  )
+cat("\n")
+print(as.data.frame(lb_summary))
+
+lb_means <- ct %>%
+  group_by(uid, leaderboard) %>%
+  summarise(mean_rt = mean(rt), .groups = "drop")
+
+lb_test <- t.test(mean_rt ~ leaderboard, data = lb_means)
+cat("\nIndependent t-test: RT by leaderboard presence\n")
+print(lb_test)
+
+# ── Edge vs Center Targets ──────────────────────────────────────
+cat("\n=== EDGE VS CENTER TARGETS ===\n")
+ct$edge <- ifelse(ct$target_x < 100 | ct$target_x > 700 |
+                  ct$target_y < 100 | ct$target_y > 400, "Edge", "Center")
+
+edge_summary <- ct %>%
+  group_by(edge) %>%
+  summarise(
+    n = n(), mean_rt = round(mean(rt), 1),
+    mean_error = round(mean(error), 1),
+    hit_rate = round(mean(hit) * 100, 1), .groups = "drop"
+  )
+print(as.data.frame(edge_summary))
+
 cat("\n=== DONE: 06_secondary.R ===\n")
