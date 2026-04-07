@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Leaderboard — MIE 286</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lilita+One&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -44,11 +44,25 @@
       100% { transform: translateY(-10vh) scale(1); opacity: 0; }
     }
 
+    /* ── Sparkle stars (decorative) ────────────────────────────── */
+    .sparkle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      font-size: 1.2rem;
+      animation: twinkle 2s ease-in-out infinite alternate;
+      opacity: 0.3;
+    }
+    @keyframes twinkle {
+      0% { opacity: 0.15; transform: scale(0.8) rotate(0deg); }
+      100% { opacity: 0.5; transform: scale(1.2) rotate(20deg); }
+    }
+
     /* ── Container ─────────────────────────────────────────────── */
     .container {
       position: relative;
       z-index: 1;
-      max-width: 900px;
+      max-width: 960px;
       margin: 0 auto;
       padding: 2rem 1.5rem 4rem;
     }
@@ -57,19 +71,63 @@
     header {
       text-align: center;
       margin-bottom: 2.5rem;
+      position: relative;
+    }
+    .header-deco {
+      font-size: 2.5rem;
+      line-height: 1;
+      margin-bottom: 0.3rem;
     }
     header h1 {
-      font-size: 2.8rem;
-      font-weight: 700;
-      color: #fff;
-      text-shadow: 0 3px 12px rgba(0,0,0,0.2), 0 0 40px rgba(255,255,255,0.15);
-      letter-spacing: -0.5px;
+      font-family: 'Lilita One', 'Fredoka', sans-serif;
+      font-size: 4.5rem;
+      font-weight: 400;
+      line-height: 1;
+      background: linear-gradient(180deg, #FFF 0%, #FFF 40%, #FBBF24 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.25));
+      letter-spacing: 2px;
     }
-    header p {
-      font-size: 1.1rem;
-      font-weight: 500;
-      color: rgba(255,255,255,0.85);
-      margin-top: 0.3rem;
+    header .subtitle {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.9);
+      margin-top: 0.4rem;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    }
+    header .player-count {
+      display: inline-block;
+      margin-top: 0.8rem;
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(8px);
+      padding: 0.4rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+    .take-test-btn {
+      display: inline-block;
+      margin-top: 0.8rem;
+      margin-left: 0.5rem;
+      background: linear-gradient(135deg, #FBBF24, #F59E0B);
+      padding: 0.5rem 1.4rem;
+      border-radius: 50px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--dark);
+      text-decoration: none;
+      border: 2px solid rgba(255,255,255,0.5);
+      box-shadow: 0 4px 15px rgba(245,158,11,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .take-test-btn:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 6px 20px rgba(245,158,11,0.5);
     }
 
     /* ── Loading ───────────────────────────────────────────────── */
@@ -100,7 +158,7 @@
       padding: 1.5rem 1.2rem 1.2rem;
       box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 0 0 3px rgba(255,255,255,0.5);
       transition: transform 0.2s;
-      width: 180px;
+      width: 190px;
     }
     .podium-spot:hover { transform: translateY(-6px) scale(1.03); }
     .podium-spot.gold {
@@ -108,22 +166,25 @@
       padding-top: 2rem;
       padding-bottom: 1.5rem;
       background: linear-gradient(170deg, #FFF7E0, #FFFFFF 40%);
-      box-shadow: 0 8px 32px rgba(251,191,36,0.3), 0 0 0 3px var(--yellow);
-      min-height: 230px;
+      box-shadow: 0 8px 32px rgba(251,191,36,0.35), 0 0 0 3px var(--yellow), 0 0 60px rgba(251,191,36,0.15);
+      min-height: 240px;
     }
     .podium-spot.silver { order: 1; min-height: 200px; }
-    .podium-spot.bronze { order: 3; min-height: 180px; }
+    .podium-spot.bronze { order: 3; min-height: 185px; }
     .podium-medal { font-size: 2.4rem; margin-bottom: 0.4rem; }
-    .gold .podium-medal { font-size: 3rem; }
+    .gold .podium-medal { font-size: 3.2rem; animation: bounce 2s ease-in-out infinite; }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
     .podium-name {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-weight: 700;
-      color: var(--dark);
       text-align: center;
       word-break: break-word;
     }
     .podium-score {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       font-weight: 700;
       margin-top: 0.3rem;
     }
@@ -137,60 +198,95 @@
       margin-top: 0.15rem;
     }
 
-    /* ── Awards ────────────────────────────────────────────────── */
+    /* ── Gradient name colors ──────────────────────────────────── */
+    .name-grad {
+      background: linear-gradient(135deg, var(--pink), var(--purple), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .gold .name-grad {
+      background: linear-gradient(135deg, #F59E0B, #D97706, #B45309);
+      -webkit-background-clip: text; background-clip: text;
+    }
+    .silver .name-grad {
+      background: linear-gradient(135deg, #9CA3AF, #6B7280, #4B5563);
+      -webkit-background-clip: text; background-clip: text;
+    }
+    .bronze .name-grad {
+      background: linear-gradient(135deg, #FB923C, #EA580C, #C2410C);
+      -webkit-background-clip: text; background-clip: text;
+    }
+
+    /* ── Awards marquee ───────────────────────────────────────── */
+    .awards-section { margin-bottom: 2.5rem; }
     .awards-title {
       text-align: center;
-      font-size: 1.6rem;
-      font-weight: 700;
+      font-family: 'Lilita One', sans-serif;
+      font-size: 2rem;
       color: #fff;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      text-shadow: 0 3px 10px rgba(0,0,0,0.2);
       margin-bottom: 1rem;
+      letter-spacing: 1px;
     }
-    .awards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    .marquee-wrap {
+      overflow: hidden;
+      mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+    }
+    .marquee-track {
+      display: flex;
       gap: 1rem;
-      margin-bottom: 2.5rem;
+      width: max-content;
+      animation: marquee 40s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
     .award-card {
+      flex-shrink: 0;
+      width: 200px;
       background: rgba(255,255,255,0.92);
       border-radius: 20px;
-      padding: 1.2rem;
+      padding: 1.2rem 1rem;
       text-align: center;
       box-shadow: 0 4px 20px rgba(0,0,0,0.08);
       transition: transform 0.2s, box-shadow 0.2s;
       border: 3px solid transparent;
+      cursor: default;
     }
     .award-card:hover {
-      transform: translateY(-4px) scale(1.02);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      transform: translateY(-4px) scale(1.04);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
     }
-    .award-card.speed   { border-color: var(--yellow); }
+    .award-card.speed    { border-color: var(--yellow); }
     .award-card.accuracy { border-color: var(--green); }
-    .award-card.streak  { border-color: var(--orange); }
-    .award-card.ice     { border-color: var(--blue); }
-    .award-card.sniper  { border-color: var(--purple); }
-    .award-card.quick   { border-color: var(--red); }
-    .award-card.orange  { border-color: var(--orange); }
-    .award-card.red     { border-color: var(--red); }
-    .award-card.green   { border-color: var(--green); }
+    .award-card.streak   { border-color: var(--orange); }
+    .award-card.ice      { border-color: var(--blue); }
+    .award-card.sniper   { border-color: var(--purple); }
+    .award-card.quick    { border-color: var(--red); }
+    .award-card.orange   { border-color: var(--orange); }
+    .award-card.red      { border-color: var(--red); }
+    .award-card.green    { border-color: var(--green); }
+    .award-card.pink     { border-color: var(--pink); }
 
-    .award-emoji { font-size: 2rem; margin-bottom: 0.3rem; }
+    .award-emoji { font-size: 2.2rem; margin-bottom: 0.3rem; }
     .award-label {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       color: #9CA3AF;
     }
     .award-name {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 700;
-      color: var(--dark);
-      margin: 0.2rem 0;
+      margin: 0.15rem 0;
     }
     .award-value {
-      font-size: 0.9rem;
+      font-size: 0.82rem;
       font-weight: 600;
       color: #6B7280;
     }
@@ -198,11 +294,12 @@
     /* ── Rankings table ────────────────────────────────────────── */
     .rankings-title {
       text-align: center;
-      font-size: 1.6rem;
-      font-weight: 700;
+      font-family: 'Lilita One', sans-serif;
+      font-size: 2rem;
       color: #fff;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      text-shadow: 0 3px 10px rgba(0,0,0,0.2);
       margin-bottom: 1rem;
+      letter-spacing: 1px;
     }
     .rankings-card {
       background: rgba(255,255,255,0.92);
@@ -211,7 +308,6 @@
       box-shadow: 0 8px 32px rgba(0,0,0,0.1);
     }
 
-    /* Tabs */
     .tabs {
       display: flex;
       background: rgba(0,0,0,0.04);
@@ -240,7 +336,6 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
 
-    /* Table */
     .rank-table { width: 100%; border-collapse: collapse; }
     .rank-table th {
       text-align: left;
@@ -264,8 +359,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 28px;
-      height: 28px;
+      width: 28px; height: 28px;
       border-radius: 50%;
       font-size: 0.8rem;
       font-weight: 700;
@@ -276,9 +370,9 @@
     .rank-3 { background: linear-gradient(135deg, #FDBA74, #F97316); }
     .rank-n { background: #E5E7EB; color: #6B7280; }
 
-    .player-name { font-weight: 600; }
-    .val-primary { font-weight: 700; color: var(--dark); }
-    .val-secondary { font-weight: 500; color: #9CA3AF; font-size: 0.8rem; }
+    .player-name { font-weight: 700; font-size: 1.05rem; }
+    .val-primary { font-weight: 700; font-size: 1.05rem; color: var(--dark); }
+    .val-secondary { font-weight: 500; color: #9CA3AF; font-size: 0.85rem; }
 
     .condition-tag {
       display: inline-block;
@@ -292,7 +386,7 @@
 
     /* ── Responsive ────────────────────────────────────────────── */
     @media (max-width: 640px) {
-      header h1 { font-size: 2rem; }
+      header h1 { font-size: 2.8rem; }
       .podium { gap: 0.5rem; }
       .podium-spot { width: 110px; padding: 1rem 0.8rem; border-radius: 18px; }
       .podium-spot.gold { min-height: 180px; }
@@ -309,36 +403,41 @@
 
   <div class="container">
     <header>
-      <h1>🏆 Leaderboard 🏆</h1>
-      <p>MIE 286 Speed-Accuracy Challenge</p>
+      <div class="header-deco">🍬 🍭 🌟 🍬 🍭</div>
+      <h1>LEADERBOARD</h1>
+      <p class="subtitle">MIE 286 Speed-Accuracy Challenge</p>
+      <div class="player-count" id="player-count"></div>
+      <a id="test-link" href="index.html" class="take-test-btn">🎮 Take the Test!</a>
     </header>
 
     <div id="loading">Loading scores...</div>
 
     <div id="content" style="display:none">
       <div id="podium-section"></div>
-      <div id="awards-section"></div>
+      <div id="awards-section" class="awards-section"></div>
       <div id="rankings-section"></div>
     </div>
   </div>
 
 <script>
-// ── Bubbles ────────────────────────────────────────────────────
-(function createBubbles() {
-  const container = document.getElementById('bubbles');
+// ── Bubbles + sparkles ─────────────────────────────────────────
+(function() {
+  const bc = document.getElementById('bubbles');
   const colors = ['#FF6B9D','#C084FC','#60A5FA','#FBBF24','#34D399','#FB923C','#F87171'];
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 22; i++) {
     const b = document.createElement('div');
     b.className = 'bubble';
-    const size = 20 + Math.random() * 60;
-    b.style.cssText = `
-      width:${size}px; height:${size}px;
-      left:${Math.random()*100}%;
-      background:${colors[Math.floor(Math.random()*colors.length)]};
-      animation-duration:${8+Math.random()*12}s;
-      animation-delay:${Math.random()*10}s;
-    `;
-    container.appendChild(b);
+    const size = 20 + Math.random() * 70;
+    b.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;background:${colors[i%colors.length]};animation-duration:${8+Math.random()*14}s;animation-delay:${Math.random()*12}s;`;
+    bc.appendChild(b);
+  }
+  const stars = ['✦','✧','⋆','✵','⭑'];
+  for (let i = 0; i < 12; i++) {
+    const s = document.createElement('div');
+    s.className = 'sparkle';
+    s.textContent = stars[i % stars.length];
+    s.style.cssText = `left:${Math.random()*95}%;top:${Math.random()*95}%;animation-delay:${Math.random()*3}s;animation-duration:${1.5+Math.random()*2}s;font-size:${0.8+Math.random()*1.2}rem;`;
+    bc.appendChild(s);
   }
 })();
 
@@ -346,99 +445,103 @@
 async function loadLeaderboard() {
   const resp = await fetch('https://api.github.com/repos/memo-ozdincer/MIE286_proj/contents/data');
   const files = await resp.json();
-
   const participants = [];
 
-  for (const file of files) {
-    if (!file.name.endsWith('.csv')) continue;
+  const csvFetches = files
+    .filter(f => f.name.endsWith('.csv'))
+    .map(async file => {
+      const csv = await (await fetch(file.download_url)).text();
+      const lines = csv.trim().split('\n');
+      if (lines.length < 2) return null;
 
-    const csv = await (await fetch(file.download_url)).text();
-    const lines = csv.trim().split('\n');
-    if (lines.length < 2) continue;
+      const headers = lines[0].split(',');
+      const rows = lines.slice(1).map(line => {
+        const vals = line.split(',');
+        const obj = {};
+        headers.forEach((h, i) => obj[h.trim()] = vals[i]);
+        return obj;
+      });
+      if (rows.length === 0) return null;
 
-    const headers = lines[0].split(',');
-    const rows = lines.slice(1).map(line => {
-      const vals = line.split(',');
-      const obj = {};
-      headers.forEach((h, i) => obj[h.trim()] = vals[i]);
-      return obj;
+      const name = rows[0].participant_id;
+      const order = rows[0].condition_order;
+      const rts = rows.map(r => parseFloat(r.reaction_time_ms));
+      const errors = rows.map(r => parseFloat(r.radial_error));
+      const hits = rows.map(r => parseInt(r.is_hit));
+
+      const avgRT = rts.reduce((a, b) => a + b, 0) / rts.length;
+      const hitRate = hits.reduce((a, b) => a + b, 0) / hits.length * 100;
+      const avgError = errors.reduce((a, b) => a + b, 0) / errors.length;
+      const fastestRT = Math.min(...rts);
+      const slowestRT = Math.max(...rts);
+      const rtStdDev = Math.sqrt(rts.reduce((s, v) => s + (v - avgRT) ** 2, 0) / rts.length);
+
+      // Hit streak + miss streak
+      let maxStreak = 0, streak = 0, maxMissStreak = 0, missStreak = 0;
+      for (const h of hits) {
+        if (h) { streak++; maxStreak = Math.max(maxStreak, streak); missStreak = 0; }
+        else { missStreak++; maxMissStreak = Math.max(maxMissStreak, missStreak); streak = 0; }
+      }
+
+      // Best single-hit error
+      let bestError = Infinity;
+      for (let i = 0; i < rows.length; i++) {
+        if (hits[i] && errors[i] < bestError) bestError = errors[i];
+      }
+
+      // One-taps (hits under 300ms)
+      let oneClicks = 0;
+      for (let i = 0; i < rows.length; i++) if (hits[i] && rts[i] < 300) oneClicks++;
+
+      // Recoveries (hit right after miss)
+      let recoveries = 0;
+      for (let i = 1; i < rows.length; i++) if (!hits[i-1] && hits[i]) recoveries++;
+
+      // Chokes (miss right after 5+ hit streak)
+      let chokes = 0;
+      let cStreak = 0;
+      for (let i = 0; i < hits.length; i++) {
+        if (hits[i]) { cStreak++; }
+        else { if (cStreak >= 5) chokes++; cStreak = 0; }
+      }
+
+      // Score
+      let score = 0, sStreak = 0;
+      for (let i = 0; i < rows.length; i++) {
+        if (hits[i]) {
+          let pts = 100;
+          pts += Math.round(Math.max(0, 1 - rts[i] / 2000) * 150);
+          pts += Math.round(Math.max(0, 1 - errors[i] / 35) * 75);
+          sStreak++;
+          let m = 1;
+          if (sStreak >= 12) m = 2; else if (sStreak >= 8) m = 1.75;
+          else if (sStreak >= 5) m = 1.5; else if (sStreak >= 3) m = 1.25;
+          score += Math.round(pts * m);
+        } else { sStreak = 0; }
+      }
+
+      // Normalize score to 60 trials for fair comparison
+      const trials = rows.length;
+      const normScore = Math.round(score * (60 / trials));
+
+      return {
+        name, order, avgRT, hitRate, avgError, fastestRT, slowestRT,
+        rtStdDev, maxStreak, maxMissStreak, bestError, score: normScore, rawScore: score, trials,
+        oneClicks, recoveries, chokes,
+      };
     });
 
-    if (rows.length === 0) continue;
-
-    const name = rows[0].participant_id;
-    const order = rows[0].condition_order;
-    const rts = rows.map(r => parseFloat(r.reaction_time_ms));
-    const errors = rows.map(r => parseFloat(r.radial_error));
-    const hits = rows.map(r => parseInt(r.is_hit));
-
-    const avgRT = rts.reduce((a, b) => a + b, 0) / rts.length;
-    const hitRate = hits.reduce((a, b) => a + b, 0) / hits.length * 100;
-    const avgError = errors.reduce((a, b) => a + b, 0) / errors.length;
-    const fastestRT = Math.min(...rts);
-    const rtMean = avgRT;
-    const rtStdDev = Math.sqrt(rts.reduce((s, v) => s + (v - rtMean) ** 2, 0) / rts.length);
-
-    // Best hit streak
-    let maxStreak = 0, streak = 0;
-    for (const h of hits) {
-      if (h) { streak++; maxStreak = Math.max(maxStreak, streak); }
-      else streak = 0;
-    }
-
-    // Lowest single-hit error
-    let bestError = Infinity;
-    for (let i = 0; i < rows.length; i++) {
-      if (hits[i] && errors[i] < bestError) bestError = errors[i];
-    }
-
-    // One-taps (hits under 300ms)
-    let oneClicks = 0;
-    for (let i = 0; i < rows.length; i++) {
-      if (hits[i] && rts[i] < 300) oneClicks++;
-    }
-
-    // Recoveries (hit right after a miss)
-    let recoveries = 0;
-    for (let i = 1; i < rows.length; i++) {
-      if (!hits[i - 1] && hits[i]) recoveries++;
-    }
-
-    // Reconstruct score (matches in-game formula)
-    let score = 0, sStreak = 0;
-    for (let i = 0; i < rows.length; i++) {
-      if (hits[i]) {
-        let pts = 100;
-        pts += Math.round(Math.max(0, 1 - rts[i] / 2000) * 150);
-        pts += Math.round(Math.max(0, 1 - errors[i] / 35) * 75);
-        sStreak++;
-        let m = 1;
-        if (sStreak >= 12) m = 2;
-        else if (sStreak >= 8) m = 1.75;
-        else if (sStreak >= 5) m = 1.5;
-        else if (sStreak >= 3) m = 1.25;
-        score += Math.round(pts * m);
-      } else { sStreak = 0; }
-    }
-
-    participants.push({
-      name, order, avgRT, hitRate, avgError, fastestRT,
-      rtStdDev, maxStreak, bestError, score, trials: rows.length,
-      oneClicks, recoveries,
-    });
-  }
-
-  return participants;
+  const results = await Promise.all(csvFetches);
+  return results.filter(Boolean);
 }
 
 // ── Rendering ──────────────────────────────────────────────────
 function render(data) {
   document.getElementById('loading').style.display = 'none';
   document.getElementById('content').style.display = 'block';
+  document.getElementById('player-count').textContent = `${data.length} players`;
 
-  // Sort by score descending
   const byScore = [...data].sort((a, b) => b.score - a.score);
-
   renderPodium(byScore);
   renderAwards(data);
   renderRankings(data, byScore);
@@ -455,9 +558,9 @@ function renderPodium(sorted) {
     html += `
       <div class="podium-spot ${classes[i]}">
         <div class="podium-medal">${medals[i]}</div>
-        <div class="podium-name">${esc(p.name)}</div>
+        <div class="podium-name name-grad">${esc(p.name)}</div>
         <div class="podium-score">${p.score.toLocaleString()}</div>
-        <div class="podium-sub">${p.hitRate.toFixed(0)}% accuracy &middot; ${p.avgRT.toFixed(0)}ms</div>
+        <div class="podium-sub">${p.hitRate.toFixed(0)}% accuracy · ${p.avgRT.toFixed(0)}ms</div>
       </div>`;
   }
   html += '</div>';
@@ -466,89 +569,71 @@ function renderPodium(sorted) {
 
 function renderAwards(data) {
   const awards = [
-    {
-      emoji: '⚡', label: 'Speed Demon', cls: 'speed',
-      pick: d => [...d].sort((a, b) => a.avgRT - b.avgRT)[0],
-      fmt: p => `${p.avgRT.toFixed(0)}ms avg`,
-    },
-    {
-      emoji: '🎯', label: 'Sharpshooter', cls: 'accuracy',
-      pick: d => [...d].sort((a, b) => b.hitRate - a.hitRate)[0],
-      fmt: p => `${p.hitRate.toFixed(1)}% hits`,
-    },
-    {
-      emoji: '🔥', label: 'Hot Streak', cls: 'streak',
-      pick: d => [...d].sort((a, b) => b.maxStreak - a.maxStreak)[0],
-      fmt: p => `${p.maxStreak} in a row`,
-    },
-    {
-      emoji: '🧊', label: 'Ice Cold', cls: 'ice',
-      pick: d => [...d].sort((a, b) => a.rtStdDev - b.rtStdDev)[0],
-      fmt: p => `\u03C3 = ${p.rtStdDev.toFixed(0)}ms`,
-    },
-    {
-      emoji: '💎', label: 'Bullseye', cls: 'sniper',
-      pick: d => [...d].filter(p => p.bestError < Infinity).sort((a, b) => a.bestError - b.bestError)[0],
-      fmt: p => `${p.bestError.toFixed(1)}px closest`,
-    },
-    {
-      emoji: '💨', label: 'Quick Draw', cls: 'quick',
-      pick: d => [...d].sort((a, b) => a.fastestRT - b.fastestRT)[0],
-      fmt: p => `${p.fastestRT.toFixed(0)}ms fastest`,
-    },
-    {
-      emoji: '🐌', label: 'Scenic Route', cls: 'speed',
-      pick: d => [...d].sort((a, b) => b.avgRT - a.avgRT)[0],
-      fmt: p => `${p.avgRT.toFixed(0)}ms avg... chill`,
-    },
-    {
-      emoji: '🎰', label: 'Spray & Pray', cls: 'streak',
-      pick: d => [...d].sort((a, b) => a.hitRate - b.hitRate)[0],
-      fmt: p => `${p.hitRate.toFixed(1)}% hit rate`,
-    },
-    {
-      emoji: '🎢', label: 'Wild Card', cls: 'orange',
-      pick: d => [...d].sort((a, b) => b.rtStdDev - a.rtStdDev)[0],
-      fmt: p => `\u03C3 = ${p.rtStdDev.toFixed(0)}ms variance`,
-    },
-    {
-      emoji: '🤖', label: 'The Machine', cls: 'ice',
-      pick: d => { const s = [...d].sort((a, b) => b.hitRate - a.hitRate); return s.find(p => p.rtStdDev < 120) || s[0]; },
-      fmt: p => `${p.hitRate.toFixed(0)}% @ \u03C3${p.rtStdDev.toFixed(0)}ms`,
-    },
-    {
-      emoji: '💀', label: 'One Tap', cls: 'red',
-      pick: d => {
-        let best = null, bestCount = 0;
-        for (const p of d) { if (p.oneClicks > bestCount) { best = p; bestCount = p.oneClicks; } }
-        return best || d[0];
-      },
-      fmt: p => `${p.oneClicks || 0} clicks under 300ms`,
-    },
-    {
-      emoji: '🧱', label: 'Unbreakable', cls: 'green',
-      pick: d => {
-        let best = null, bestRec = 0;
-        for (const p of d) { if (p.recoveries > bestRec) { best = p; bestRec = p.recoveries; } }
-        return best || d[0];
-      },
-      fmt: p => `${p.recoveries || 0} hits right after a miss`,
-    },
+    { emoji:'⚡', label:'Speed Demon', cls:'speed',
+      pick: d => [...d].sort((a,b) => a.avgRT - b.avgRT)[0],
+      fmt: p => `${p.avgRT.toFixed(0)}ms avg` },
+    { emoji:'🎯', label:'Sharpshooter', cls:'accuracy',
+      pick: d => [...d].sort((a,b) => b.hitRate - a.hitRate)[0],
+      fmt: p => `${p.hitRate.toFixed(1)}% hits` },
+    { emoji:'🔥', label:'Hot Streak', cls:'streak',
+      pick: d => [...d].sort((a,b) => b.maxStreak - a.maxStreak)[0],
+      fmt: p => `${p.maxStreak} hits in a row` },
+    { emoji:'💀', label:'Cold Streak', cls:'red',
+      pick: d => [...d].sort((a,b) => b.maxMissStreak - a.maxMissStreak)[0],
+      fmt: p => `${p.maxMissStreak} misses in a row` },
+    { emoji:'🧊', label:'Ice Cold', cls:'ice',
+      pick: d => [...d].sort((a,b) => a.rtStdDev - b.rtStdDev)[0],
+      fmt: p => `σ = ${p.rtStdDev.toFixed(0)}ms` },
+    { emoji:'💎', label:'Bullseye', cls:'sniper',
+      pick: d => [...d].filter(p => p.bestError < Infinity).sort((a,b) => a.bestError - b.bestError)[0],
+      fmt: p => `${p.bestError.toFixed(1)}px closest` },
+    { emoji:'💨', label:'Quick Draw', cls:'quick',
+      pick: d => [...d].sort((a,b) => a.fastestRT - b.fastestRT)[0],
+      fmt: p => `${p.fastestRT.toFixed(0)}ms fastest click` },
+    { emoji:'🐌', label:'Scenic Route', cls:'pink',
+      pick: d => [...d].sort((a,b) => b.avgRT - a.avgRT)[0],
+      fmt: p => `${p.avgRT.toFixed(0)}ms avg` },
+    { emoji:'🎰', label:'Spray & Pray', cls:'streak',
+      pick: d => [...d].sort((a,b) => a.hitRate - b.hitRate)[0],
+      fmt: p => `${p.hitRate.toFixed(1)}% hit rate` },
+    { emoji:'🎢', label:'Wild Card', cls:'orange',
+      pick: d => [...d].sort((a,b) => b.rtStdDev - a.rtStdDev)[0],
+      fmt: p => `σ = ${p.rtStdDev.toFixed(0)}ms variance` },
+    { emoji:'🤖', label:'The Machine', cls:'ice',
+      pick: d => { const s = [...d].sort((a,b) => b.hitRate - a.hitRate); return s.find(p => p.rtStdDev < 120) || s[0]; },
+      fmt: p => `${p.hitRate.toFixed(0)}% @ σ${p.rtStdDev.toFixed(0)}ms` },
+    { emoji:'🎯', label:'One Tap', cls:'red',
+      pick: d => [...d].sort((a,b) => b.oneClicks - a.oneClicks)[0],
+      fmt: p => `${p.oneClicks} clicks under 300ms` },
+    { emoji:'🧱', label:'Unbreakable', cls:'green',
+      pick: d => [...d].sort((a,b) => b.recoveries - a.recoveries)[0],
+      fmt: p => `${p.recoveries} hits after a miss` },
+    { emoji:'😬', label:'Choke Artist', cls:'pink',
+      pick: d => [...d].sort((a,b) => b.chokes - a.chokes)[0],
+      fmt: p => `${p.chokes} misses after 5+ streak` },
   ];
 
-  let html = '<div class="awards-title">✨ Special Awards ✨</div><div class="awards-grid">';
+  // Build cards HTML
+  let cards = '';
   for (const a of awards) {
     const p = a.pick(data);
     if (!p) continue;
-    html += `
+    cards += `
       <div class="award-card ${a.cls}">
         <div class="award-emoji">${a.emoji}</div>
         <div class="award-label">${a.label}</div>
-        <div class="award-name">${esc(p.name)}</div>
+        <div class="award-name name-grad">${esc(p.name)}</div>
         <div class="award-value">${a.fmt(p)}</div>
       </div>`;
   }
-  html += '</div>';
+
+  // Duplicate for seamless loop
+  const html = `
+    <div class="awards-title">✨ SUPERLATIVES ✨</div>
+    <div class="marquee-wrap">
+      <div class="marquee-track">${cards}${cards}</div>
+    </div>`;
+
   document.getElementById('awards-section').innerHTML = html;
 }
 
@@ -557,8 +642,8 @@ function renderRankings(data, byScore) {
     score:     { data: byScore, cols: ['Score','Accuracy','Avg RT'], fmt: p => [p.score.toLocaleString(), p.hitRate.toFixed(1)+'%', p.avgRT.toFixed(0)+'ms'] },
     speed:     { data: [...data].sort((a,b) => a.avgRT - b.avgRT), cols: ['Avg RT','Fastest','Accuracy'], fmt: p => [p.avgRT.toFixed(0)+'ms', p.fastestRT.toFixed(0)+'ms', p.hitRate.toFixed(1)+'%'] },
     accuracy:  { data: [...data].sort((a,b) => b.hitRate - a.hitRate), cols: ['Hit Rate','Avg Error','Avg RT'], fmt: p => [p.hitRate.toFixed(1)+'%', p.avgError.toFixed(1)+'px', p.avgRT.toFixed(0)+'ms'] },
-    precision: { data: [...data].sort((a,b) => a.avgError - b.avgError), cols: ['Avg Error','Best Shot','Hit Rate'], fmt: p => [p.avgError.toFixed(1)+'px', p.bestError.toFixed(1)+'px', p.hitRate.toFixed(1)+'%'] },
-    streaks:   { data: [...data].sort((a,b) => b.maxStreak - a.maxStreak), cols: ['Best Streak','Consistency','Score'], fmt: p => [p.maxStreak+'', '\u03C3 '+p.rtStdDev.toFixed(0)+'ms', p.score.toLocaleString()] },
+    precision: { data: [...data].sort((a,b) => a.avgError - b.avgError), cols: ['Avg Error','Best Shot','Hit Rate'], fmt: p => [p.avgError.toFixed(1)+'px', (p.bestError<Infinity?p.bestError.toFixed(1):'—')+'px', p.hitRate.toFixed(1)+'%'] },
+    streaks:   { data: [...data].sort((a,b) => b.maxStreak - a.maxStreak), cols: ['Hit Streak','Miss Streak','Score'], fmt: p => [p.maxStreak+'', p.maxMissStreak+'', p.score.toLocaleString()] },
   };
 
   const tabNames = { score:'Overall', speed:'Speed', accuracy:'Accuracy', precision:'Precision', streaks:'Streaks' };
@@ -569,16 +654,10 @@ function renderRankings(data, byScore) {
   }
   tabs += '</div>';
 
-  let html = `
-    <div class="rankings-title">📊 Full Rankings 📊</div>
-    <div class="rankings-card">
-      ${tabs}
-      <div id="rank-table-wrap"></div>
-    </div>`;
+  document.getElementById('rankings-section').innerHTML = `
+    <div class="rankings-title">📊 FULL RANKINGS 📊</div>
+    <div class="rankings-card">${tabs}<div id="rank-table-wrap"></div></div>`;
 
-  document.getElementById('rankings-section').innerHTML = html;
-
-  // Tab switching
   function showSort(key) {
     document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.sort === key));
     const s = sorts[key];
@@ -596,7 +675,7 @@ function renderRankings(data, byScore) {
         : '<span class="condition-tag av">A→V</span>';
       table += `<tr>
         <td><span class="rank-num ${cls}">${rank}</span></td>
-        <td class="player-name">${esc(p.name)}</td>
+        <td class="player-name name-grad">${esc(p.name)}</td>
         <td>${orderTag}</td>
         <td class="val-primary">${vals[0]}</td>
         <td class="val-secondary">${vals[1]}</td>
@@ -607,17 +686,17 @@ function renderRankings(data, byScore) {
     document.getElementById('rank-table-wrap').innerHTML = table;
   }
 
-  document.querySelectorAll('.tab').forEach(t => {
-    t.addEventListener('click', () => showSort(t.dataset.sort));
-  });
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => showSort(t.dataset.sort)));
   showSort('score');
 }
 
-function esc(s) {
-  const d = document.createElement('div');
-  d.textContent = s;
-  return d.innerHTML;
-}
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+// ── Pass token to test link ─────────────────────────────────────
+(function() {
+  const hash = window.location.hash;
+  if (hash) document.getElementById('test-link').href = 'index.html' + hash;
+})();
 
 // ── Init ───────────────────────────────────────────────────────
 loadLeaderboard().then(render).catch(err => {
