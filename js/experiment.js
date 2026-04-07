@@ -187,6 +187,7 @@ class Experiment {
       </div>
       <p id="submit-status" class="status-pending">Saving data&hellip;</p>
       <button class="btn" id="dl-btn">Download CSV</button>
+      <a href="leaderboard.html" class="btn btn-secondary" style="display:inline-block;margin-left:0.5rem;text-decoration:none;">View Leaderboard</a>
     `);
 
     document.getElementById('dl-btn').addEventListener('click', () => this.logger.download());

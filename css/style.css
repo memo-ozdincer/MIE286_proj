@@ -126,6 +126,8 @@ body {
 }
 .btn:hover  { background: #2563EB; }
 .btn:active { transform: scale(0.97); }
+.btn-secondary { background: #7C3AED; }
+.btn-secondary:hover { background: #6D28D9; }
 
 /* ── Canvas Area ──────────────────────────────────────────────── */
 #screen {
