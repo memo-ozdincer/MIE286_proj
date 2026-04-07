@@ -14,6 +14,7 @@
 \usepackage{amsmath}
 \usepackage{xcolor}
 \usepackage[hidelinks]{hyperref}
+\usepackage{subcaption}
 
 \onehalfspacing
 \graphicspath{{figures/}}
@@ -343,31 +344,78 @@ Residual analysis for the SAT interaction model (error $\sim$ RT $\times$ condit
 
 \section{Experiment Interface and Screenshots}
 
+% Instruction screens side by side
 \begin{figure}[H]
 \centering
-\fbox{\parbox{0.85\textwidth}{\centering\vspace{1.5cm}
-\textit{[Insert: side-by-side screenshots of the experiment interface showing}\\
-\textit{(a) visual feedback with gold border glow and (b) auditory feedback.}\\
-\textit{Include the shared HUD (score, streak, trial counter).]}
-\vspace{1.5cm}}}
-\caption{Experiment interface. Both conditions share an identical HUD. The only difference is the feedback channel: colored border glow (visual) or tone (auditory).}
+\begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{visual_information_block.png}
+  \caption{Visual condition instructions}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{auditory_information_block.png}
+  \caption{Auditory condition instructions}
+\end{subfigure}
+\caption{Instruction screens shown before each block. Both describe the same task; only the feedback description differs. Participants were told the border would glow gold/green/red (visual) or that they would hear high/medium/low tones (auditory).}
 \end{figure}
 
+% Visual feedback states — the key figure showing WHY gold-chasing happens
 \begin{figure}[H]
 \centering
-\fbox{\parbox{0.85\textwidth}{\centering\vspace{1.5cm}
+\begin{subfigure}[t]{0.32\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{hit_gold_feedback_visual.png}
+  \caption{Gold glow (fast hit, $<$600\,ms)}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.32\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{green_feedback_visual.png}
+  \caption{Green glow (slow hit, $\geq$600\,ms)}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.32\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{miss_feedback_visual.png}
+  \caption{Red glow + shake (miss)}
+\end{subfigure}
+\caption{The three visual feedback states. The salient distinction between gold and green---visible at a glance---created the speed incentive that drove participants to chase faster responses. Participants were observed to be visibly frustrated at receiving green instead of gold.}
+\end{figure}
+
+% Auditory hit vs visual hit — contrast
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{hit_gold_feedback_visual.png}
+  \caption{Visual condition: gold border glow on fast hit}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{hit_on_audio_shows_no_visual_confimation.png}
+  \caption{Auditory condition: no visual change on hit}
+\end{subfigure}
+\caption{Direct comparison of a fast hit in each condition. Under visual feedback~(a), the gold glow provides immediate, conspicuous confirmation. Under auditory feedback~(b), the interface looks identical regardless of speed---the only feedback is a brief tone. This asymmetry in perceptual salience is central to the speed-chasing effect.}
+\end{figure}
+
+% Consent form
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.55\textwidth]{consent_screen.png}
+\caption{Informed consent and demographic collection screen. Participants provided their name, input device, and gaming frequency before beginning.}
+\end{figure}
+
+% Leaderboard placeholder (if screenshot exists, swap in)
+\begin{figure}[H]
+\centering
+\fbox{\parbox{0.85\textwidth}{\centering\vspace{1.2cm}
 \textit{[Insert: screenshot of the leaderboard with superlative badges.}\\
 \textit{Post-leaderboard participants were 77\,ms faster ($p = .007$).]}
-\vspace{1.5cm}}}
+\vspace{1.2cm}}}
 \caption{Leaderboard with superlative awards, introduced mid-collection to boost engagement.}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\fbox{\parbox{0.85\textwidth}{\centering\vspace{1cm}
-\textit{[Insert: screenshot of the informed consent form.]}
-\vspace{1cm}}}
-\caption{Informed consent screen shown before data collection.}
 \end{figure}
 
 
