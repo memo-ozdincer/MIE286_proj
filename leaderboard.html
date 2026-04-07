@@ -375,6 +375,62 @@
     .podium-name { cursor: pointer; }
     .podium-name:hover { text-decoration: underline; }
 
+    /* ── Superlative badges next to names ───────────────────────── */
+    .sup-badge {
+      display: inline-block;
+      position: relative;
+      font-size: 0.85em;
+      margin-left: 2px;
+      cursor: default;
+    }
+    .sup-badge .sup-tip {
+      display: none;
+      position: absolute;
+      bottom: 130%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 0.3rem 0.6rem;
+      border-radius: 8px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      white-space: nowrap;
+      color: #fff;
+      pointer-events: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      z-index: 10;
+    }
+    .sup-badge .sup-tip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: inherit;
+    }
+    .sup-badge:hover .sup-tip { display: block; }
+
+    .sup-tip.speed    { background: #D97706; border-top-color: #D97706; }
+    .sup-tip.speed::after { border-top-color: #D97706; }
+    .sup-tip.accuracy { background: #059669; border-top-color: #059669; }
+    .sup-tip.accuracy::after { border-top-color: #059669; }
+    .sup-tip.streak   { background: #EA580C; border-top-color: #EA580C; }
+    .sup-tip.streak::after { border-top-color: #EA580C; }
+    .sup-tip.ice      { background: #2563EB; border-top-color: #2563EB; }
+    .sup-tip.ice::after { border-top-color: #2563EB; }
+    .sup-tip.sniper   { background: #7C3AED; border-top-color: #7C3AED; }
+    .sup-tip.sniper::after { border-top-color: #7C3AED; }
+    .sup-tip.quick    { background: #DC2626; border-top-color: #DC2626; }
+    .sup-tip.quick::after { border-top-color: #DC2626; }
+    .sup-tip.orange   { background: #EA580C; border-top-color: #EA580C; }
+    .sup-tip.orange::after { border-top-color: #EA580C; }
+    .sup-tip.red      { background: #DC2626; border-top-color: #DC2626; }
+    .sup-tip.red::after { border-top-color: #DC2626; }
+    .sup-tip.green    { background: #059669; border-top-color: #059669; }
+    .sup-tip.green::after { border-top-color: #059669; }
+    .sup-tip.pink     { background: #DB2777; border-top-color: #DB2777; }
+    .sup-tip.pink::after { border-top-color: #DB2777; }
+
     /* ── Player modal ──────────────────────────────────────────── */
     .modal-overlay {
       display: none;
@@ -619,12 +675,29 @@ async function loadLeaderboard() {
       for (let i = 1; i < rows.length; i++) if (!hits[i-1] && hits[i]) recoveries++;
 
       // Chokes (miss right after 5+ hit streak)
-      let chokes = 0;
-      let cStreak = 0;
+      let chokes = 0, cStreak = 0;
       for (let i = 0; i < hits.length; i++) {
         if (hits[i]) { cStreak++; }
         else { if (cStreak >= 5) chokes++; cStreak = 0; }
       }
+
+      // Closing strong: hit rate in last 10 trials
+      const last10 = hits.slice(-10);
+      const closeRate = last10.reduce((a,b) => a+b, 0) / last10.length * 100;
+
+      // Slow starter: hit rate in first 10 trials
+      const first10 = hits.slice(0, 10);
+      const openRate = first10.reduce((a,b) => a+b, 0) / first10.length * 100;
+
+      // Improvement: last-half avg RT vs first-half avg RT
+      const half = Math.floor(rts.length / 2);
+      const firstHalfRT = rts.slice(0, half).reduce((a,b) => a+b, 0) / half;
+      const secondHalfRT = rts.slice(half).reduce((a,b) => a+b, 0) / (rts.length - half);
+      const rtImprovement = firstHalfRT - secondHalfRT;
+
+      // Panic clicks: how many times RT < 200ms (spam/anticipatory)
+      let panicClicks = 0;
+      for (const rt of rts) if (rt < 200) panicClicks++;
 
       // Score
       let score = 0, sStreak = 0;
@@ -648,7 +721,7 @@ async function loadLeaderboard() {
       return {
         name, order, avgRT, hitRate, avgError, fastestRT, slowestRT,
         rtStdDev, maxStreak, maxMissStreak, bestError, score: normScore, rawScore: score, trials,
-        oneClicks, recoveries, chokes,
+        oneClicks, recoveries, chokes, closeRate, openRate, rtImprovement, panicClicks,
       };
     });
 
@@ -668,8 +741,8 @@ function render(data) {
   document.getElementById('player-count').textContent = `${data.length} players`;
 
   const byScore = [...data].sort((a, b) => b.score - a.score);
+  renderAwards(data);      // must run first so allAwards is set for getBadges()
   renderPodium(byScore);
-  renderAwards(data);
   renderRankings(data, byScore);
 }
 
@@ -684,7 +757,7 @@ function renderPodium(sorted) {
     html += `
       <div class="podium-spot ${classes[i]}">
         <div class="podium-medal">${medals[i]}</div>
-        <div class="podium-name name-grad" onclick="showPlayer('${esc(p.name)}')">${esc(p.name)}</div>
+        <div class="podium-name name-grad" onclick="showPlayer('${esc(p.name)}')">${esc(p.name)} ${getBadges(p.name)}</div>
         <div class="podium-score">${p.score.toLocaleString()}</div>
         <div class="podium-sub">${p.hitRate.toFixed(0)}% accuracy · ${p.avgRT.toFixed(0)}ms · ${p.trials}t</div>
       </div>`;
@@ -737,6 +810,18 @@ function renderAwards(data) {
     { emoji:'😬', label:'Choke Artist', cls:'pink',
       pick: d => [...d].sort((a,b) => b.chokes - a.chokes)[0],
       fmt: p => `${p.chokes} misses after 5+ streak` },
+    { emoji:'🏁', label:'Strong Finish', cls:'green',
+      pick: d => [...d].sort((a,b) => b.closeRate - a.closeRate)[0],
+      fmt: p => `${p.closeRate.toFixed(0)}% hit rate in last 10` },
+    { emoji:'🐢', label:'Slow Starter', cls:'orange',
+      pick: d => [...d].sort((a,b) => a.openRate - b.openRate)[0],
+      fmt: p => `${p.openRate.toFixed(0)}% in first 10 trials` },
+    { emoji:'📈', label:'Most Improved', cls:'accuracy',
+      pick: d => [...d].sort((a,b) => b.rtImprovement - a.rtImprovement)[0],
+      fmt: p => `${p.rtImprovement.toFixed(0)}ms faster in 2nd half` },
+    { emoji:'😤', label:'Panic Clicker', cls:'pink',
+      pick: d => [...d].sort((a,b) => b.panicClicks - a.panicClicks)[0],
+      fmt: p => `${p.panicClicks} clicks under 200ms` },
   ];
 
   // Build cards HTML
@@ -801,7 +886,7 @@ function renderRankings(data, byScore) {
         : '<span class="condition-tag av">A→V</span>';
       table += `<tr>
         <td><span class="rank-num ${cls}">${rank}</span></td>
-        <td class="player-name name-grad" onclick="showPlayer('${esc(p.name).replace(/'/g,"\\&#39;")}')">${esc(p.name)}</td>
+        <td class="player-name name-grad" onclick="showPlayer('${esc(p.name).replace(/'/g,"\\&#39;")}')">${esc(p.name)} ${getBadges(p.name)}</td>
         <td>${orderTag}</td>
         <td class="val-primary">${vals[0]}</td>
         <td class="val-secondary">${vals[1]}</td>
@@ -817,6 +902,15 @@ function renderRankings(data, byScore) {
 }
 
 function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+/** Build superlative badge emojis for a player name. */
+function getBadges(name) {
+  if (!allAwards.length || !allData.length) return '';
+  return allAwards
+    .filter(a => { const w = a.pick(allData); return w && w.name === name; })
+    .map(a => `<span class="sup-badge">${a.emoji}<span class="sup-tip ${a.cls}">${a.label}</span></span>`)
+    .join('');
+}
 
 // ── Player modal ───────────────────────────────────────────────
 function showPlayer(name) {
