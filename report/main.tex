@@ -20,6 +20,7 @@
 \usepackage{xcolor}
 \usepackage{subcaption}
 \usepackage{caption}
+\usepackage{indentfirst}
 \usepackage[hidelinks]{hyperref}
 
 \graphicspath{{figures/}}
@@ -88,7 +89,7 @@ Contrary to our original hypothesis, the collected data suggests that visual fee
 
 The speed--accuracy tradeoff (SAT) is a fundamental constraint: faster responses are generally less accurate. Heitz~[6] emphasizes that the SAT is not a single number but a \emph{function} whose shape can change across conditions. Fitts' Law~[4,\,5] characterizes motor pointing performance, but our task holds target size constant and randomizes position, so differences should reflect cognitive processing of feedback rather than pure motor constraints.
 
-Prior work supports modality effects. Akamatsu et al.~[7] found auditory feedback reduced movement time in pointing tasks. Sigrist et al.~[8] reviewed evidence that auditory feedback supports motor learning through cross-modal facilitation. However, these studies examined mean performance:whether modality changes the SAT \emph{slope} remains open.
+Prior work supports modality effects. Akamatsu et al.~[7] found auditory feedback reduced movement time in pointing tasks. Sigrist et al.~[8] reviewed evidence that auditory feedback supports motor learning through cross-modal facilitation. However, these studies examined mean performance; whether modality changes the SAT \emph{slope} remains open.
 
 
 % ═══ 3. METHODS ═══════════════════════════════════════════════
@@ -121,7 +122,7 @@ A total of 72 participants (aged 18-23 years, all university students) took part
 
 \subsection{Apparatus and Task}
 
-The experiment was a browser-based application hosted on GitHub Pages. Targets (radius = 35\,px) appeared at random canvas positions; participants clicked them as quickly and accurately as possible. Timing used the browser's \texttt{performance.now()} API (sub-millisecond precision). A 400\,ms inter-trial interval separated targets. Figure~\ref{fig:feedback_states} shows the three visual feedback states.
+The experiment interface was a browser-based application hosted on GitHub Pages. Targets (radius = 35\,px) appeared at random canvas positions and participants were instructed to click them as quickly and accurately as possible. Timing used the browser's \texttt{performance.now()} API (sub-millisecond precision). A 400\,ms inter-trial interval separated targets. Figure~\ref{fig:feedback_states} shows the three visual feedback states.
 
 \begin{figure}[H]
 \centering
@@ -150,17 +151,17 @@ The experiment was a browser-based application hosted on GitHub Pages. Targets (
 
 Feedback type was within-subject with two levels:
 
-\textbf{Visual.} Border glow:gold ($<$600\,ms), green ($\geq$600\,ms), or red + shake (miss). 150\,ms duration.
+\textbf{Visual.} Border glow; gold ($<$600\,ms), green ($\geq$600\,ms), or red + shake (miss). 150\,ms duration.
 
-\textbf{Auditory.} Pure tones:880\,Hz (fast hit), 440\,Hz (slow hit), 180\,Hz (miss). 200\,ms duration.
+\textbf{Auditory.} Pure tones; 880\,Hz (fast hit), 440\,Hz (slow hit), 180\,Hz (miss). 200\,ms duration.
 
 Both conditions conveyed identical three-level information. The on-screen HUD (trial counter, score, streak) was identical in both conditions. This addresses the proposal feedback, which noted an information asymmetry in the original design.
 
 \subsection{Dependent Variables}
 
-\textbf{DV\textsubscript{1}: Reaction time} (ms):target onset to click.
+\textbf{DV\textsubscript{1}: Reaction time} (ms), target onset to click.
 
-\textbf{DV\textsubscript{2}: Radial error} (px):Euclidean distance from click to target center. Hit = error $\leq$ 35\,px.
+\textbf{DV\textsubscript{2}: Radial error} (px), Euclidean distance from click to target center. Hit = error $\leq$ 35\,px.
 
 \subsection{Procedure}
 
@@ -210,7 +211,7 @@ where $d = \bar{e}_{\text{vis}} - \bar{e}_{\text{aud}}$ per participant.
 \]
 A significant $\beta_3$ indicates different SAT slopes. Supplemented with Pearson correlations (Week 2--3) and simple linear regression per condition (Week 11).
 
-All tests used $\alpha = 0.05$. Cohen's $d$ reported for paired comparisons.
+All tests used $\alpha = 0.05$, setting the Type~I error rate (false positive) at 5\%. Cohen's $d$ is reported for paired comparisons. The shift from 30 to 60 trials was motivated by reducing Type~II error (false negative): the 30-trial cohort lacked sufficient power to detect the small within-subject effects (see Appendix~\ref{app:30v60}).
 
 
 % ═══ 5. RESULTS ═══════════════════════════════════════════════
@@ -334,7 +335,7 @@ Previous = Miss & 142 (85.0\%) & 25 (15.0\%) \\
 
 \subsection{Spatial Click Patterns}
 
-On misses ($n = 171$), there was a systematic spatial bias: participants clicked 5.4\,px below and 1.3\,px to the right of the target on average, likely reflecting cursor hotspot position or hand biomechanics.
+On misses ($n = 171$), there was a systematic spatial bias: participants clicked an average of 5.4\,px below and 1.3\,px to the right of the target, likely reflecting cursor hotspot position or hand biomechanics.
 
 Edge targets (distance from canvas center $\geq 150$\,px) were harder: mean RT of 727\,ms vs.\ 666\,ms for center targets ($p < .001$), with a slightly lower hit rate (94.9\% vs.\ 95.8\%). This confirms a Fitts' Law-like effect. The full click scatter is in Appendix~B (Figure~B.1).
 
@@ -556,7 +557,7 @@ The tilt effect ($\chi^2 = 67.2$, $p < .001$) demonstrates that trial independen
 All analyses were conducted in R~4.5. The pipeline consists of six scripts run sequentially via \texttt{00\_run\_all.R}:
 
 \begin{enumerate}
-  \item \texttt{01\_load\_clean.R} : Load 72 CSVs, exclude RT outliers, aggregate per-participant means.
+  \item \texttt{01\_load\_clean.R} : Load all CSVs, exclude RT outliers, filter to 60-trial participants ($N = 41$), aggregate per-participant means.
   \item \texttt{02\_descriptives.R} : Summary tables by condition, device, gaming frequency.
   \item \texttt{03\_assumptions.R} : Shapiro--Wilk tests and QQ plots.
   \item \texttt{04\_inferential.R} : Paired $t$-test (H\textsubscript{1}), Wilcoxon (H\textsubscript{2}), multiple regression with interaction (H\textsubscript{3}).
