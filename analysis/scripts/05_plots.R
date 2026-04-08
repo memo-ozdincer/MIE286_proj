@@ -70,6 +70,7 @@ p3 <- ggplot(ct_plot, aes(x = rt, y = error, color = Condition)) +
   geom_point(alpha = 0.15, size = 0.8) +
   geom_smooth(method = "lm", se = TRUE, linewidth = 1.2, alpha = 0.2) +
   scale_color_manual(values = pal) +
+  coord_cartesian(xlim = c(150, 2000), ylim = c(0, 100)) +
   labs(x = "Reaction Time (ms)", y = "Radial Error (px)",
        color = "Condition") +
   annotate("text", x = Inf, y = Inf,

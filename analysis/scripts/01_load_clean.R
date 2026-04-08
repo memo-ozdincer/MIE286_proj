@@ -10,7 +10,7 @@ cat("Found", length(csv_files), "CSV files\n")
 
 raw <- csv_files %>%
   map_dfr(~ {
-    df <- read_csv(.x, show_col_types = FALSE)
+    df <- read_csv(.x, col_types = cols(.default = "c"))
     df$source_file <- basename(.x)
     df
   })
