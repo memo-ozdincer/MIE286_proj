@@ -269,7 +269,7 @@ Figure~\ref{fig:sat} shows the RT-vs-error scatter. The linear correlations are 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{sat_scatter.pdf}
-\caption{RT vs.\ radial error by condition. Linear correlations are weak ($r \approx -0.15$ to $-0.19$). The scatter shows a boundary pattern rather than a clean linear SAT. Axes capped at 2000\,ms and 100\,px.}
+\caption{RT vs.\ radial error by condition (no regression lines shown; the relationship is not linear). The scatter shows a Pareto-like boundary: trials cluster in the fast-and-accurate region, with outliers along either the high-error or high-RT axis, but almost no trials are both slow \emph{and} inaccurate. This suggests a performance frontier rather than a simple linear tradeoff.}
 \label{fig:sat}
 \end{figure}
 
@@ -284,13 +284,15 @@ Figure~\ref{fig:sat_density} shows the same data as a density plot, which better
 \label{fig:sat_density}
 \end{figure}
 
-\textbf{Per-participant SAT.} The weak population-level correlation masks substantial individual differences. Figure~\ref{fig:pp_cors} shows the distribution of within-participant RT-error correlations. The mean is $r \approx -0.09$ in both conditions, but individual values range from $-0.5$ to $+0.4$. About 68\% of participants show negative correlations (faster = more accurate, the ``easy target'' pattern), while a minority show the classical positive SAT. Roughly 15 participants per condition have $|r| > 0.3$, indicating strong individual tradeoff relationships that cancel out at the population level. This suggests the SAT in this task is an \emph{individual-differences} phenomenon: some people trade off speed for accuracy, others do not, and the population average obscures both groups.
+\textbf{Individual-level cross-condition SAT.} While the population means (H\textsubscript{1}, H\textsubscript{2}) did not differ significantly, the SAT emerges more clearly at the individual level. Figure~\ref{fig:ind_sat} plots each participant's RT change (visual minus auditory) against their error change. The correlation is $r = -0.193$ ($p = .104$, 95\% CI $[-0.41,\ 0.04]$): participants who became faster under visual tended to become slightly less accurate. Though not significant at $\alpha = 0.05$, the direction is consistent with a speed-accuracy tradeoff operating \emph{across conditions within individuals}, even when the population averages wash it out.
+
+The scatter also shows a boundary pattern consistent with the trial-level data: participants cluster in the fast-and-accurate or slow-and-precise quadrants, with few in the slow-and-inaccurate quadrant. This reciprocal-like shape suggests a performance ceiling where both speed and accuracy cannot degrade simultaneously.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{pp_correlation_dist.pdf}
-\caption{Distribution of per-participant Pearson $r$ (RT vs.\ error). Most cluster near zero, but the spread is wide. The SAT is an individual-differences phenomenon in this task.}
-\label{fig:pp_cors}
+\includegraphics[width=0.7\textwidth]{individual_sat.pdf}
+\caption{Individual-level SAT across conditions. Each point = one participant. Participants below the diagonal (lower-left) sped up under visual but paid an accuracy cost. $r = -0.193$, $p = .104$.}
+\label{fig:ind_sat}
 \end{figure}
 
 \subsection{Covariates}
