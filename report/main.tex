@@ -96,7 +96,7 @@ Prior work supports modality effects. Akamatsu et al.~[7] found auditory feedbac
 
 \subsection{Participants}
 
-72 individuals (ages 18--24, university students) participated via convenience sampling. Initially, the experiment used 30 trials per block, but preliminary analysis showed that 30 trials produced unstable per-participant statistics and the effects of interest (streak patterns, tilt cascades) were not visible. We therefore increased to 60 trials per block. Only participants who completed the full 60-trial protocol are included in the analysis ($N = 41$). Table~\ref{tab:sample} summarizes the final sample.
+A total of 72 participants (aged 18-23 years, all university students) took part in the study. Initially, the experiment used 30 trials per block, but preliminary analysis showed that 30 trials produced unstable per-participant statistics and the effects of interest (streak patterns, tilt cascades) were not visible. We therefore increased to 60 trials per block. Only participants who completed the full 60-trial protocol are included in the analysis ($N = 41$). Table~\ref{tab:sample} summarizes the final sample.
 
 \begin{table}[H]
 \centering
@@ -171,11 +171,11 @@ Consent $\;\to\;$ Instructions $\;\to\;$ 5 practice trials $\;\to\;$ \textbf{Blo
 }}
 \vspace{4pt}
 
-Condition order was randomized per participant. Target positions were randomized. A gamification system (scoring, particle effects, and a leaderboard) was introduced mid-collection to boost engagement and recruitment.
+Condition order was randomized per participant. Target positions were randomized. A gamification system (scoring, particle effects, and a leaderboard) was used to boost engagement and recruitment.
 
 \subsection{Potential Biases}
 
-Convenience sampling limits generalizability. Device variability introduced noise (mouse users were 178\,ms faster than trackpad users). Trial counts varied (30 vs.\ 60 per block); per-participant means normalize this. Audio environment was uncontrolled. The leaderboard introduced mid-collection increased speed by 96\,ms ($p < .001$) but did not affect accuracy. Four participants completed the experiment twice; each attempt was treated as a separate observation.
+Convenience sampling limits generalizability. Device variability was controlled as a covariate in the H\textsubscript{3} regression. Audio environment was uncontrolled. Four participants completed the experiment twice; each attempt was treated as a separate observation.
 
 
 % ═══ 4. ANALYSIS ══════════════════════════════════════════════
@@ -191,13 +191,13 @@ Normality of within-subject differences was assessed with the Shapiro--Wilk test
 
 \subsection{Hypothesis Tests}
 
-\textbf{H\textsubscript{1} (Speed).} Our original prediction, based on MRT, was that auditory feedback would be faster. The data showed the opposite. We used a \emph{two-tailed} paired $t$-test because our directional prediction was reversed:
+\textbf{H\textsubscript{1} (Speed).} Our original prediction, based on MRT, was that auditory feedback would be faster. The data showed the opposite. We used a \emph{two-tailed} paired $t$-test (hypothesis testing, confidence intervals) because our directional prediction was reversed:
 \vspace{-4pt}
 \begin{align*}
   H_0 &: \mu_{\text{vis}} = \mu_{\text{aud}} &\quad H_1 &: \mu_{\text{vis}} \neq \mu_{\text{aud}}
 \end{align*}
 
-\textbf{H\textsubscript{2} (Accuracy).} One-tailed Wilcoxon signed-rank test (normality violated):
+\textbf{H\textsubscript{2} (Accuracy).} One-tailed Wilcoxon signed-rank test (nonparametric alternative, normality violated):
 \vspace{-4pt}
 \begin{align*}
   H_0 &: \text{median}(d_{\text{error}}) \leq 0 &\quad H_1 &: \text{median}(d_{\text{error}}) > 0
@@ -278,7 +278,7 @@ The linear correlations between RT and error are weak ($r_{\text{vis}} = -.193$,
 
 \textbf{H\textsubscript{3} result.} With device type included as a covariate, the multiple regression interaction was highly significant: $\beta_3 = -0.0106$, $t(4913) = -5.49$, $p < .001$. The visual slope ($b = -0.009$) was steeper than auditory ($b = -0.001$, $R^2 = .001$), confirming that visual feedback amplifies the linear component of the speed-accuracy relationship. The model $R^2 = .032$ is modest, consistent with the Pareto-like boundary pattern dominating the data rather than a clean linear trend.
 
-\textbf{Individual-level cross-condition SAT.} While the population means (H\textsubscript{1}, H\textsubscript{2}) did not differ significantly, the SAT emerges more clearly at the individual level. Figure~\ref{fig:ind_sat} plots each participant's RT change (visual minus auditory) against their error change. The correlation is $r = -0.193$ ($p = .104$, 95\% CI $[-0.41,\ 0.04]$): participants who became faster under visual tended to become slightly less accurate. Though not significant at $\alpha = 0.05$, the direction is consistent with a speed-accuracy tradeoff operating \emph{across conditions within individuals}, even when the population averages wash it out.
+\textbf{Individual-level cross-condition SAT.} Beyond the population-level tests, the SAT can also be examined at the individual level. Figure~\ref{fig:ind_sat} plots each participant's RT change (visual minus auditory) against their error change. The correlation is $r = -0.193$ ($p = .104$, 95\% CI $[-0.41,\ 0.04]$): participants who became faster under visual tended to become slightly less accurate. Though not significant at $\alpha = 0.05$, the direction is consistent with a speed-accuracy tradeoff operating \emph{across conditions within individuals}, even when the population averages wash it out.
 
 The scatter also shows a boundary pattern consistent with the trial-level data: participants cluster in the fast-and-accurate or slow-and-precise quadrants, with few in the slow-and-inaccurate quadrant. This reciprocal-like shape suggests a performance ceiling where both speed and accuracy cannot degrade simultaneously.
 
@@ -295,19 +295,19 @@ The scatter also shows a boundary pattern consistent with the trial-level data: 
 \centering
 \caption{Performance by input device and gaming frequency.}
 \label{tab:covariates}
-\begin{tabular}{lccc}
+\begin{tabular}{lcccc}
 \toprule
-& $N$ & Mean RT (ms) & Hit Rate (\%) \\
+& $N$ & Mean RT (ms) & Mean Error (px) & Hit Rate (\%) \\
 \midrule
-\multicolumn{4}{l}{\textit{Input Device}} \\
-\quad Mouse & 18 & 588 & 96.9 \\
-\quad Trackpad & 16 & 792 & 95.8 \\
-\quad Other & 7 & 681 & 97.0 \\[4pt]
-\multicolumn{4}{l}{\textit{Gaming Frequency}} \\
-\quad Daily & 9 & 598 & 99.4 \\
-\quad Weekly & 10 & 680 & 95.7 \\
-\quad Never & 9 & 695 & 97.0 \\
-\quad Rarely & 13 & 739 & 94.9 \\
+\multicolumn{5}{l}{\textit{Input Device}} \\
+\quad Mouse & 18 & 588 & 12.2 & 96.9 \\
+\quad Trackpad & 16 & 792 & 14.8 & 95.8 \\
+\quad Other & 7 & 681 & 13.1 & 97.0 \\[4pt]
+\multicolumn{5}{l}{\textit{Gaming Frequency}} \\
+\quad Daily & 9 & 598 & 10.8 & 99.4 \\
+\quad Weekly & 10 & 680 & 14.0 & 95.7 \\
+\quad Never & 9 & 695 & 13.5 & 97.0 \\
+\quad Rarely & 13 & 739 & 14.7 & 94.9 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -507,7 +507,7 @@ The tilt effect ($\chi^2 = 67.2$, $p < .001$) demonstrates that trial independen
   \includegraphics[width=\textwidth]{leaderboard.png}
   \caption{Leaderboard with superlatives.}
 \end{subfigure}
-\caption{Data collection interface. The leaderboard was introduced mid-collection to boost engagement.}
+\caption{Data collection interface and leaderboard.}
 \end{figure}
 
 
@@ -561,25 +561,10 @@ All analyses were conducted in R~4.5. The pipeline consists of six scripts run s
   \item \texttt{03\_assumptions.R} : Shapiro--Wilk tests and QQ plots.
   \item \texttt{04\_inferential.R} : Paired $t$-test (H\textsubscript{1}), Wilcoxon (H\textsubscript{2}), multiple regression with interaction (H\textsubscript{3}).
   \item \texttt{05\_plots.R} : All figures.
-  \item \texttt{06\_secondary.R} : Tilt effect, order check, variance, block comparison, leaderboard effect, spatial bias.
+  \item \texttt{06\_secondary.R} : Tilt effect, order check, variance, block comparison, spatial bias.
 \end{enumerate}
 
 Full code is in the \texttt{analysis/scripts/} directory submitted alongside this report.
 
-
-\section{Attribution}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{lp{10cm}}
-\toprule
-\textbf{Member} & \textbf{Contributions} \\
-\midrule
-Markiyan Konyk & \\
-Jessica Yi & \\
-Memo Ozdincer & \\
-\bottomrule
-\end{tabular}
-\end{table}
 
 \end{document}
