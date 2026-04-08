@@ -96,7 +96,7 @@ Prior work supports modality effects. Akamatsu et al.~[7] found auditory feedbac
 
 \subsection{Participants}
 
-A total of 72 participants (aged 18-23 years, all university students) took part in the study. Initially, the experiment used 30 trials per block, but preliminary analysis showed that 30 trials produced unstable per-participant statistics and the effects of interest (streak patterns, tilt cascades) were not visible. We therefore increased to 60 trials per block. Only participants who completed the full 60-trial protocol are included in the analysis ($N = 41$). Table~\ref{tab:sample} summarizes the final sample.
+A total of 72 participants (aged 18-23 years, all university students) took part in the study. Initially, the experiment used 30 trials per block, but preliminary analysis showed that 30 trials produced unstable per-participant statistics and the effects of interest (streak patterns, tilt cascades) were not visible. Thus, the number of trials was increased to 60 per block. Only participants who completed the full 60-trial protocol are included in the final analysis ($N = 41$); a full comparison of 30- vs.\ 60-trial cohorts is in Appendix~\ref{app:30v60}. Table~\ref{tab:sample} summarizes the final sample.
 
 \begin{table}[H]
 \centering
@@ -284,7 +284,7 @@ The scatter also shows a boundary pattern consistent with the trial-level data: 
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{individual_sat.pdf}
+\includegraphics[width=0.65\textwidth]{individual_sat.pdf}
 \caption{Individual-level SAT across conditions. Each point = one participant. Participants below the diagonal (lower-left) sped up under visual but paid an accuracy cost. $r = -0.193$, $p = .104$.}
 \label{fig:ind_sat}
 \end{figure}
@@ -565,6 +565,34 @@ All analyses were conducted in R~4.5. The pipeline consists of six scripts run s
 \end{enumerate}
 
 Full code is in the \texttt{analysis/scripts/} directory submitted alongside this report.
+
+
+\section{30 vs.\ 60 Trial Comparison}
+\label{app:30v60}
+
+To justify the shift from 30 to 60 trials per block, we compared the statistical results across both cohorts. Table~\ref{tab:30v60} shows that the 30-trial participants ($N = 31$) produced no significant effects for any hypothesis, while the 60-trial participants ($N = 41$) produced significant results for all three. The 30-trial group added between-participant noise without contributing sufficient within-participant data for stable estimates.
+
+\begin{table}[H]
+\centering
+\caption{Comparison of statistical results by trial count.}
+\label{tab:30v60}
+\begin{tabular}{lccccc}
+\toprule
+& \multicolumn{2}{c}{\textbf{30 trials ($N=31$)}} & \multicolumn{2}{c}{\textbf{60 trials ($N=41$)}} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5}
+& Statistic & $p$ & Statistic & $p$ \\
+\midrule
+H\textsubscript{1}: RT & $t = 0.21$ & $.837$ & $t = -2.05$ & $.047$* \\
+H\textsubscript{2}: Error & $V = 203$ & $.811$ & $V = 580$ & $.026$* \\
+H\textsubscript{3}: Interaction & $\beta_3 = 0.018$ & $.163$ & $\beta_3 = -0.011$ & $<.001$*** \\
+\midrule
+Mean RT diff (ms) & \multicolumn{2}{c}{$+2.0$} & \multicolumn{2}{c}{$-18.5$} \\
+Mean error diff (px) & \multicolumn{2}{c}{$-2.5$} & \multicolumn{2}{c}{$+1.0$} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The 30-trial cohort showed essentially zero RT difference between conditions ($+0.5$\,ms) and an error difference in the \emph{wrong direction} ($-2.5$\,px). With only 30 trials per condition per participant, individual means were too noisy to detect the small within-subject effects. This motivated the design change to 60 trials, which provided sufficient statistical power ($d = 0.27$--$0.32$) to detect the feedback modality effect.
 
 
 \end{document}
