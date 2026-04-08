@@ -51,9 +51,9 @@
 % ═══ 1. INTRODUCTION ══════════════════════════════════════════
 \section{Introduction}
 
-We built a browser-based target-clicking game and asked 72 university students to play it under two different feedback conditions: one where the screen border flashes a color after each click (visual), and one where a tone plays instead (auditory). The question: does the type of feedback change how people balance speed and accuracy?
+This project centers around a browser-based target-clicking game, where $N = 41$ university students were asked to play it under two different feedback conditions: one where the screen border flashes a color after each click (visual), and one where a tone plays instead (auditory). Our investigation was guided by the question: does the type of sensory feedback change how people balance speed and accuracy?
 
-Figure~\ref{fig:interface} shows the game. A blue target appears at a random position on an 800$\times$500\,px canvas; the participant clicks it as fast and accurately as they can. In the visual condition, the border glows gold (fast hit), green (slow hit), or red (miss). In the auditory condition, a high, medium, or low tone plays instead. Both convey the same three levels of information.
+Figure~\ref{fig:interface} shows the game's interface. A blue target appears at a random position on an 800$\times$500\,px canvas; the participant clicks the blue dot as quickly as they can with precision. In the visual condition, the border glows gold (fast hit), green (slow hit), or red (miss). In the auditory condition, a high, medium, or low tone plays instead. Both convey the same three categories of information.
 
 \begin{figure}[H]
 \centering
@@ -72,9 +72,9 @@ Figure~\ref{fig:interface} shows the game. A blue target appears at a random pos
 \label{fig:interface}
 \end{figure}
 
-Wickens' Multiple Resource Theory~[1,\,2] predicts that a visual task paired with visual feedback should overload one attentional channel, making auditory feedback less disruptive. Cognitive Load Theory~[3] agrees: distributing information across modalities should reduce burden. We expected auditory feedback to produce faster, more efficient responses.
+Wickens' Multiple Resource Theory~[1,\,2] predicts that a visual task paired with visual feedback should overload one attentional channel, suggesting that auditory feedback may be more effective for visual tasks. Cognitive Load Theory~[3] agrees: distributing information across modalities should reduce sensory burden. Thus, we expected that auditory feedback would enhance response speed and precision during the visual task.
 
-What we found was the opposite. Visual feedback made people \emph{faster}, not slower. The gold/green distinction created a visible speed target that participants actively chased:they were frustrated when they got green instead of gold. This motivational effect overrode the predicted interference. We tested three hypotheses:
+Contrary to our original hypothesis, the collected data suggests that visual feedback made people \emph{faster}, not slower. The gold/green distinction created a visible speed target that participants actively chased; they were frustrated when they got green instead of gold. This motivational effect overrode the predicted interference. We tested three hypotheses:
 
 \begin{enumerate}
   \item \textbf{H\textsubscript{1}:} Reaction time will differ between visual and auditory feedback.
@@ -96,25 +96,25 @@ Prior work supports modality effects. Akamatsu et al.~[7] found auditory feedbac
 
 \subsection{Participants}
 
-72 individuals (ages 18--24, university students) participated via convenience sampling. Table~\ref{tab:sample} summarizes the sample.
+72 individuals (ages 18--24, university students) participated via convenience sampling. Initially, the experiment used 30 trials per block, but preliminary analysis showed that 30 trials produced unstable per-participant statistics and the effects of interest (streak patterns, tilt cascades) were not visible. We therefore increased to 60 trials per block. Only participants who completed the full 60-trial protocol are included in the analysis ($N = 41$). Table~\ref{tab:sample} summarizes the final sample.
 
 \begin{table}[H]
 \centering
-\caption{Participant demographics and covariates.}
+\caption{Participant demographics and covariates ($N = 41$).}
 \label{tab:sample}
 \begin{tabular}{llr}
 \toprule
 \textbf{Covariate} & \textbf{Level} & \textbf{$N$} \\
 \midrule
-\multirow{3}{*}{Input Device} & Mouse & 27 \\
- & Trackpad & 31 \\
- & Other & 14 \\[4pt]
-\multirow{4}{*}{Gaming Frequency} & Never & 15 \\
- & Rarely & 23 \\
- & Weekly & 22 \\
- & Daily & 12 \\[4pt]
-\multirow{2}{*}{Condition Order} & Visual $\to$ Auditory & 32 \\
- & Auditory $\to$ Visual & 40 \\
+\multirow{3}{*}{Input Device} & Mouse & 18 \\
+ & Trackpad & 16 \\
+ & Other & 7 \\[4pt]
+\multirow{4}{*}{Gaming Frequency} & Never & 9 \\
+ & Rarely & 13 \\
+ & Weekly & 10 \\
+ & Daily & 9 \\[4pt]
+\multirow{2}{*}{Condition Order (randomized)} & Visual $\to$ Auditory & 17 \\
+ & Auditory $\to$ Visual & 24 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -183,7 +183,7 @@ Convenience sampling limits generalizability. Device variability introduced nois
 
 \subsection{Data Cleaning}
 
-Trials with RT $< 150$\,ms (anticipatory) or $> 8{,}000$\,ms (inattention) were excluded:77 of 6{,}840 trials (1.13\%). The remaining 6{,}763 trials were aggregated to per-participant means for each condition, yielding 72 paired observations.
+Only participants who completed the full 60-trial protocol were included ($N = 41$ of 72 total). Trials with RT $< 150$\,ms or $> 8{,}000$\,ms were excluded. The remaining 4{,}919 trials were aggregated to per-participant means for each condition, yielding 41 paired observations.
 
 \subsection{Assumption Checks}
 
@@ -218,11 +218,11 @@ All tests used $\alpha = 0.05$. Cohen's $d$ reported for paired comparisons.
 
 \subsection{Descriptive Statistics}
 
-Table~\ref{tab:dvs} summarizes the two dependent variables. Visual feedback was associated with faster responses and slightly greater error, consistent with the SAT.
+Table~\ref{tab:dvs} summarizes the two dependent variables. Visual feedback was associated with significantly faster responses ($-18.5$\,ms, $p = .047$) and significantly greater error ($+1.0$\,px, $p = .026$), consistent with a speed-accuracy tradeoff.
 
 \begin{table}[H]
 \centering
-\caption{Performance by feedback condition ($N = 72$). Per-participant means $\pm$ SD.}
+\caption{Performance by feedback condition ($N = 41$, 60-trial participants only). Per-participant means $\pm$ SD.}
 \label{tab:dvs}
 \small
 \begin{tabular}{lcccccc}
@@ -231,10 +231,10 @@ Table~\ref{tab:dvs} summarizes the two dependent variables. Visual feedback was 
 \cmidrule(lr){2-3} \cmidrule(lr){4-5}
 & $M$ & $SD$ & $M$ & $SD$ & & \\
 \midrule
-RT (ms) & 683 & 133 & 693 & 140 & $-9.7$ & .151 \\
-Error (px) & 17.9 & 30.5 & 18.5 & 39.6 & $-0.5$ & .184 \\
-Hit Rate (\%) & 94.4 & 12.6 & 94.8 & 11.9 & $-0.4$ & \\
-RT $\sigma$ (ms) & 132.9 & & 140.2 & & $-7.3$ & .655 \\
+RT (ms) & 675 & 135 & 693 & 142 & $-18.5$ & .047 \\
+Error (px) & 13.9 & 5.6 & 12.9 & 4.5 & $+1.0$ & .026 \\
+Hit Rate (\%) & 96.0 & 5.7 & 97.0 & 4.3 & $-1.0$ & \\
+RT $\sigma$ (ms) & 134.9 & & 142.4 & & $-7.5$ & \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -259,11 +259,11 @@ RT $\sigma$ (ms) & 132.9 & & 140.2 & & $-7.3$ & .655 \\
 \caption{Reaction time by condition. Individual variation is large ($SD = 56.5$\,ms for paired differences), which is why H\textsubscript{1} did not reach significance despite a 9.7\,ms mean difference.}
 \end{figure}
 
-\textbf{H\textsubscript{1} result.} Paired $t$-test: $t(71) = -1.45$, $p = .151$, 95\% CI $[-23.0,\ 3.6]$\,ms, $d = -0.17$. We fail to reject $H_0$.
+\textbf{H\textsubscript{1} result.} Paired $t$-test: $t(40) = -2.05$, $p = .047$, 95\% CI $[-36.7,\ -0.2]$\,ms, $d = -0.32$. We reject $H_0$: visual feedback produced significantly faster responses.
 
 \subsection{Radial Error}
 
-\textbf{H\textsubscript{2} result.} Wilcoxon signed-rank: $V = 1475$, $p = .184$ (one-tailed), $d = -0.05$. Not significant. Accuracy was near ceiling ($\sim$95\% hit rate), limiting the range of detectable error differences.
+\textbf{H\textsubscript{2} result.} Wilcoxon signed-rank: $V = 580$, $p = .026$ (one-tailed), $d = 0.27$. Significant: visual feedback produced greater radial error, consistent with a speed-accuracy tradeoff.
 
 \subsection{Speed--Accuracy Tradeoff Structure}
 
@@ -276,7 +276,7 @@ The linear correlations between RT and error are weak ($r_{\text{vis}} = -.193$,
 \label{fig:sat_density}
 \end{figure}
 
-\textbf{H\textsubscript{3} result.} The multiple regression interaction was significant: $\beta_3 = -0.0085$, $t(6759) = -2.28$, $p = .023$. However, the model explains only 2.9\% of variance, so this is a statistically detectable but practically small effect. The visual slope ($b = -0.031$) was steeper than auditory ($b = -0.022$), suggesting that the linear component of the SAT is slightly amplified under visual feedback, but a linear model is not the dominant description of this data.
+\textbf{H\textsubscript{3} result.} With device type included as a covariate, the multiple regression interaction was highly significant: $\beta_3 = -0.0106$, $t(4913) = -5.49$, $p < .001$. The visual slope ($b = -0.009$) was steeper than auditory ($b = -0.001$, $R^2 = .001$), confirming that visual feedback amplifies the linear component of the speed-accuracy relationship. The model $R^2 = .032$ is modest, consistent with the Pareto-like boundary pattern dominating the data rather than a clean linear trend.
 
 \textbf{Individual-level cross-condition SAT.} While the population means (H\textsubscript{1}, H\textsubscript{2}) did not differ significantly, the SAT emerges more clearly at the individual level. Figure~\ref{fig:ind_sat} plots each participant's RT change (visual minus auditory) against their error change. The correlation is $r = -0.193$ ($p = .104$, 95\% CI $[-0.41,\ 0.04]$): participants who became faster under visual tended to become slightly less accurate. Though not significant at $\alpha = 0.05$, the direction is consistent with a speed-accuracy tradeoff operating \emph{across conditions within individuals}, even when the population averages wash it out.
 
@@ -300,23 +300,23 @@ The scatter also shows a boundary pattern consistent with the trial-level data: 
 & $N$ & Mean RT (ms) & Hit Rate (\%) \\
 \midrule
 \multicolumn{4}{l}{\textit{Input Device}} \\
-\quad Mouse & 27 & 598 & 95.6 \\
-\quad Trackpad & 31 & 776 & 96.1 \\
-\quad Other & 14 & 667 & 89.3 \\[4pt]
+\quad Mouse & 18 & 588 & 96.9 \\
+\quad Trackpad & 16 & 792 & 95.8 \\
+\quad Other & 7 & 681 & 97.0 \\[4pt]
 \multicolumn{4}{l}{\textit{Gaming Frequency}} \\
-\quad Daily & 12 & 602 & 90.7 \\
-\quad Weekly & 22 & 666 & 95.4 \\
-\quad Never & 15 & 714 & 96.4 \\
-\quad Rarely & 23 & 737 & 94.7 \\
+\quad Daily & 9 & 598 & 99.4 \\
+\quad Weekly & 10 & 680 & 95.7 \\
+\quad Never & 9 & 695 & 97.0 \\
+\quad Rarely & 13 & 739 & 94.9 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Mouse users were 178\,ms faster than trackpad users but had similar hit rates:a device-level SAT. Daily gamers were fast (602\,ms) but had the lowest accuracy (90.7\%), contrary to the expectation that gaming experience uniformly improves performance.
+Mouse users were 204\,ms faster than trackpad users (588 vs.\ 792\,ms) but had similar hit rates, a device-level SAT. Device type was included as a covariate in the H\textsubscript{3} regression to control for this. Daily gamers were the fastest (598\,ms) \emph{and} most accurate (99.4\%), while rare gamers were slowest (739\,ms) and least accurate (94.9\%). Trackpad users showed a stronger visual feedback effect ($d = -0.34$, $p = .065$) than mouse users ($d = -0.08$, $p = .70$), suggesting the modality effect is larger when the task is harder.
 
 \subsection{Tilt Effect (Error Cascading)}
 
-When a participant missed, the probability of missing the \emph{next} trial was 24.7\% (73/295):compared to just 3.5\% (222/6{,}324) after a hit. That is a \textbf{7$\times$ increase}, $\chi^2(1) = 293.5$, $p < .001$. Errors cascade: a single miss temporarily disrupts focus or motor calibration, triggering further misses. This ``tilt'' effect (borrowing the poker term for emotion-driven errors) operated in both conditions and is visualized in Table~\ref{tab:tilt}.
+When a participant missed, the probability of missing the \emph{next} trial was 15.0\% (25/167), compared to just 3.0\% (139/4{,}670) after a hit. That is a \textbf{5$\times$ increase}, $\chi^2(1) = 67.2$, $p < .001$. Errors cascade: a single miss temporarily disrupts focus or motor calibration, triggering further misses. This ``tilt'' effect (borrowing the poker term for emotion-driven errors) operated in both conditions and is visualized in Table~\ref{tab:tilt}.
 
 \begin{table}[H]
 \centering
@@ -326,35 +326,35 @@ When a participant missed, the probability of missing the \emph{next} trial was 
 \toprule
 & \textbf{Next = Hit} & \textbf{Next = Miss} \\
 \midrule
-Previous = Hit & 6{,}102 (96.5\%) & 222 (3.5\%) \\
-Previous = Miss & 222 (75.3\%) & 73 (24.7\%) \\
+Previous = Hit & 4{,}531 (97.0\%) & 139 (3.0\%) \\
+Previous = Miss & 142 (85.0\%) & 25 (15.0\%) \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \subsection{Spatial Click Patterns}
 
-On misses ($n = 305$), there was a systematic spatial bias: participants clicked 9.1\,px below and 30.3\,px to the right of the target on average. A one-sample $t$-test on the vertical offset confirmed the downward bias was significant ($t = -2.41$, $p = .017$), likely reflecting cursor hotspot position or hand biomechanics. The visual condition produced a wider miss scatter (SD of miss distance: visual $= 73.2$\,px, auditory $= 58.1$\,px), consistent with more impulsive clicking under speed pressure.
+On misses ($n = 171$), there was a systematic spatial bias: participants clicked 5.4\,px below and 1.3\,px to the right of the target on average, likely reflecting cursor hotspot position or hand biomechanics.
 
 Edge targets (distance from canvas center $\geq 150$\,px) were harder: mean RT of 727\,ms vs.\ 666\,ms for center targets ($p < .001$), with a slightly lower hit rate (94.9\% vs.\ 95.8\%). This confirms a Fitts' Law-like effect. The full click scatter is in Appendix~B (Figure~B.1).
 
 \subsection{Additional Controls}
 
-Counterbalancing was effective: no significant difference in overall RT between Visual-first ($M = 687$\,ms) and Auditory-first ($M = 689$\,ms) groups, $t(69.7) = 0.05$, $p = .960$. Block 2 was slightly faster than Block 1 ($684$ vs.\ $692$\,ms, $p = .281$, $d = 0.13$). Visual participants slowed down 65.5\,ms after a miss vs.\ only 17.4\,ms for auditory, suggesting visual feedback makes failure more salient (Figure~\ref{fig:postmiss} in Appendix).
+Condition order was randomized per participant. Counterbalancing was effective: no significant difference in overall RT between Visual-first and Auditory-first groups, $t = 0.40$, $p = .690$. Visual participants slowed down 65.5\,ms after a miss vs.\ only 17.4\,ms for auditory, suggesting visual feedback makes failure more salient (Figure~\ref{fig:postmiss} in Appendix).
 
 
 % ═══ 6. CONCLUSION ════════════════════════════════════════════
 \section{Conclusion}
 
-Neither mean RT nor mean error differed significantly between conditions (H\textsubscript{1}: $p = .151$; H\textsubscript{2}: $p = .184$). However, the \emph{structure} of the speed--accuracy tradeoff did differ (H\textsubscript{3}: $p = .023$): the SAT slope under visual feedback was 38\% steeper.
+All three hypotheses were supported in the 60-trial cohort. Visual feedback produced significantly faster responses (H\textsubscript{1}: $p = .047$, $d = -0.32$), significantly greater radial error (H\textsubscript{2}: $p = .026$, $d = 0.27$), and a significantly steeper SAT slope (H\textsubscript{3}: $p < .001$). Notably, when the analysis included the 30-trial participants ($N = 72$), none of these effects reached significance (H\textsubscript{1}: $p = .151$; H\textsubscript{2}: $p = .184$; H\textsubscript{3}: $p = .023$), demonstrating the importance of sufficient trial counts for detecting within-subject effects. This motivated our shift from 30 to 60 trials per block during the experiment design.
 
-The MRT prediction:that auditory feedback should reduce interference:was not supported. Instead, the visual condition's gold/green glow created a speed incentive: participants could \emph{see} whether they were ``fast'' and were visibly frustrated at getting green instead of gold. This speed-chasing was absent in the auditory condition, where the tone distinction was less motivationally compelling. MRT's interference framework is incomplete for predicting feedback effects: modality affects not only attentional load but also \emph{motivation}.
+The MRT prediction, that auditory feedback should reduce interference, was not supported. Instead, the visual condition's gold/green glow created a speed incentive: participants could \emph{see} whether they were ``fast'' and were visibly frustrated at getting green instead of gold. This speed-chasing was absent in the auditory condition. MRT's interference framework is incomplete: modality affects not only attentional load but also \emph{motivation}.
 
-The tilt effect ($\chi^2 = 293.5$, $p < .001$) demonstrates that trial independence cannot be assumed in sequential motor tasks: a single miss increases the next-trial miss probability by 7$\times$.
+The tilt effect ($\chi^2 = 67.2$, $p < .001$) demonstrates that trial independence cannot be assumed in sequential motor tasks: a single miss increases the next-trial miss probability by 5$\times$.
 
 \textbf{Practical implications.} Visual feedback may inadvertently create speed pressure in safety-critical interfaces; auditory feedback may better preserve accuracy.
 
-\textbf{Limitations.} H\textsubscript{1} and H\textsubscript{2} were not significant ($d \approx 0.17$, power $\approx 0.30$ with $n = 72$), increasing Type~II error risk. Accuracy was near ceiling ($\sim$95\%), leaving little room for error differences. The linear SAT model explains only 2.9\% of variance; the Pareto-like boundary pattern suggests a constraint envelope rather than a linear function. Convenience sampling (all 18--24 university students) limits generalizability. Device variability introduced noise (mouse users 178\,ms faster than trackpad). The visual border glow is inherently more salient than a tone; our results speak to feedback ``as deployed'' rather than pure modality.
+\textbf{Limitations.} Effect sizes were small to medium ($d = 0.27$--$0.32$). Accuracy was near ceiling ($\sim$96\%), limiting the range of detectable error differences. The linear SAT model explains only 3.2\% of variance; the Pareto-like boundary pattern suggests a constraint envelope rather than a linear function. Device variability was controlled as a covariate in the regression but still introduced noise in the paired tests. Convenience sampling (all 18--24 university students) limits generalizability. The visual border glow is inherently more salient than a tone; our results speak to feedback ``as deployed'' rather than pure modality.
 
 \textbf{Lessons learned.} Counterbalancing confirmed no order effect ($p = .960$). Gamification boosted engagement without biasing within-subject comparisons. The gold/green speed indicator, intended as neutral feedback, became a performance incentive, which is itself evidence that visual feedback drives speed-chasing behavior. Future work should manipulate feedback salience independently of modality to disentangle interference and motivational effects.
 
