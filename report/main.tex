@@ -1,7 +1,7 @@
 \documentclass[12pt,letterpaper]{article}
 
 % ── Fonts & Layout ─────────────────────────────────────────────
-\usepackage[margin=0.85in]{geometry}
+\usepackage[margin=0.75in]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{helvet}
@@ -37,7 +37,7 @@
 
 % ═══ Compact Title Block (not a full page) ════════════════════
 \begin{center}
-\vspace*{-0.3cm}
+\vspace*{-1cm}
 {\Large\bfseries The Effect of Feedback Modality on Speed--Accuracy\\[2pt]Tradeoff in a Visual Target-Selection Task}\\[10pt]
 {\normalsize MIE\,286 -- Probability \& Statistics \hfill Winter 2026 \hfill Team 51}\\[4pt]
 {\normalsize Markiyan Konyk \quad Jessica Yi \quad Memo Ozdincer}\\[3pt]
@@ -125,24 +125,24 @@ The experiment was a browser-based application hosted on GitHub Pages. Targets (
 
 \begin{figure}[H]
 \centering
-\begin{subfigure}[t]{0.31\textwidth}
+\begin{subfigure}[t]{0.30\textwidth}
   \centering
   \includegraphics[width=\textwidth]{hit_gold_feedback_visual.png}
-  \caption{Gold (fast hit)}
+  \caption{Gold (fast)}
 \end{subfigure}
 \hfill
-\begin{subfigure}[t]{0.31\textwidth}
+\begin{subfigure}[t]{0.30\textwidth}
   \centering
   \includegraphics[width=\textwidth]{green_feedback_visual.png}
-  \caption{Green (slow hit)}
+  \caption{Green (slow)}
 \end{subfigure}
 \hfill
-\begin{subfigure}[t]{0.31\textwidth}
+\begin{subfigure}[t]{0.30\textwidth}
   \centering
   \includegraphics[width=\textwidth]{miss_feedback_visual.png}
   \caption{Red + shake (miss)}
 \end{subfigure}
-\caption{The three visual feedback states. Gold vs.\ green created a salient speed incentive:participants were observed chasing gold.}
+\caption{Visual feedback states. The gold vs.\ green distinction created a speed incentive.}
 \label{fig:feedback_states}
 \end{figure}
 
@@ -222,41 +222,44 @@ Table~\ref{tab:dvs} summarizes the two dependent variables. Visual feedback was 
 
 \begin{table}[H]
 \centering
-\caption{Performance by feedback condition ($N = 72$). Values are means of per-participant means $\pm$ SD.}
+\caption{Performance by feedback condition ($N = 72$). Per-participant means $\pm$ SD.}
 \label{tab:dvs}
-\begin{tabular}{lccc}
+\small
+\begin{tabular}{lcccccc}
 \toprule
-& \textbf{Visual} & \textbf{Auditory} & \textbf{Difference} \\
+& \multicolumn{2}{c}{\textbf{Visual}} & \multicolumn{2}{c}{\textbf{Auditory}} & \textbf{Diff} & \textbf{$p$} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5}
+& $M$ & $SD$ & $M$ & $SD$ & & \\
 \midrule
-Reaction Time (ms) & $683 \pm 133$ & $693 \pm 140$ & $-9.7$ \\
-Radial Error (px) & $17.9 \pm 30.5$ & $18.5 \pm 39.6$ & $-0.5$ \\
-Hit Rate (\%) & 94.4 & 94.8 & $-0.4$ \\
-RT Std Dev (ms) & $132.9$ & $140.2$ & $-7.3$ \\
+RT (ms) & 683 & 133 & 693 & 140 & $-9.7$ & .151 \\
+Error (px) & 17.9 & 30.5 & 18.5 & 39.6 & $-0.5$ & .184 \\
+Hit Rate (\%) & 94.4 & 12.6 & 94.8 & 11.9 & $-0.4$ & \\
+RT $\sigma$ (ms) & 132.9 & & 140.2 & & $-7.3$ & .655 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \subsection{Reaction Time}
 
-Figure~\ref{fig:spaghetti} shows individual participant trajectories. While the grand mean difference is only 9.7\,ms, individual variation is large:some participants were over 100\,ms faster under visual, others 100\,ms slower. This between-participant variability ($SD = 56.5$\,ms) is why H\textsubscript{1} did not reach significance.
-
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{rt_spaghetti.pdf}
-\caption{Paired RT comparison. Each grey line = one participant. Diamond = grand mean. Slopes vary widely.}
-\label{fig:spaghetti}
+\begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{rt_spaghetti.pdf}
+  \caption{Paired RT. Grey lines = individuals. Diamond = grand mean.}
+  \label{fig:spaghetti}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{rt_density.pdf}
+  \caption{RT distributions. Visual is tighter, peaking near the 600\,ms gold threshold.}
+  \label{fig:density}
+\end{subfigure}
+\caption{Reaction time by condition. Individual variation is large ($SD = 56.5$\,ms for paired differences), which is why H\textsubscript{1} did not reach significance despite a 9.7\,ms mean difference.}
 \end{figure}
 
-\textbf{H\textsubscript{1} result.} Paired $t$-test: $t(71) = -1.45$, $p = .151$, 95\% CI $[-23.0,\ 3.6]$\,ms, $d = -0.17$. We fail to reject $H_0$. The 9.7\,ms difference was not statistically reliable.
-
-Figure~\ref{fig:density} overlays trial-level RT distributions. The visual distribution is tighter and more peaked around 500--600\,ms:the gold threshold range:suggesting participants targeted this boundary.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.75\textwidth]{rt_density.pdf}
-\caption{RT distributions by condition. Visual is tighter with a sharper peak near the 600\,ms gold/green threshold.}
-\label{fig:density}
-\end{figure}
+\textbf{H\textsubscript{1} result.} Paired $t$-test: $t(71) = -1.45$, $p = .151$, 95\% CI $[-23.0,\ 3.6]$\,ms, $d = -0.17$. We fail to reject $H_0$.
 
 \subsection{Radial Error}
 
@@ -264,25 +267,16 @@ Figure~\ref{fig:density} overlays trial-level RT distributions. The visual distr
 
 \subsection{Speed--Accuracy Tradeoff Structure}
 
-Figure~\ref{fig:sat} shows the RT-vs-error scatter. The linear correlations are weak ($r_{\text{vis}} = -.193$, $r_{\text{aud}} = -.154$), and visually the relationship is not a clean linear trend. Instead, the scatter shows a boundary pattern: trials cluster in the low-RT/low-error region (fast and accurate), with outliers spreading along either the high-error or high-RT axis, but few trials in the high-RT/high-error quadrant. This suggests a performance boundary rather than a simple linear tradeoff.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.85\textwidth]{sat_scatter.pdf}
-\caption{RT vs.\ radial error by condition (no regression lines shown; the relationship is not linear). The scatter shows a Pareto-like boundary: trials cluster in the fast-and-accurate region, with outliers along either the high-error or high-RT axis, but almost no trials are both slow \emph{and} inaccurate. This suggests a performance frontier rather than a simple linear tradeoff.}
-\label{fig:sat}
-\end{figure}
-
-\textbf{H\textsubscript{3} result.} The multiple regression interaction was significant: $\beta_3 = -0.0085$, $t(6759) = -2.28$, $p = .023$. However, the overall model explains very little variance ($R^2 = .029$), meaning this is a statistically detectable but practically small effect. The visual slope ($b = -0.031$) was steeper than auditory ($b = -0.022$), but neither explains the data well. We interpret this cautiously: the linear model captures a real but subtle difference in how speed and error relate across conditions, but a linear SAT is not the dominant pattern in this data.
-
-Figure~\ref{fig:sat_density} shows the same data as a density plot, which better reveals the concentration of trials in the fast-and-accurate region and the boundary structure of the scatter.
+The linear correlations between RT and error are weak ($r_{\text{vis}} = -.193$, $r_{\text{aud}} = -.154$). Rather than a clean linear tradeoff, the data shows a Pareto-like boundary pattern (Figure~\ref{fig:sat_density}): trials cluster in the fast-and-accurate region, with outliers spreading along either the high-error or high-RT axis, but almost no trials are both slow \emph{and} inaccurate. This suggests a performance frontier rather than a simple linear SAT.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.9\textwidth]{sat_density.pdf}
-\caption{2D density plot of RT vs.\ error. Most trials cluster in the low-RT, low-error region. The ``empty'' upper-right quadrant (slow and inaccurate) suggests a performance boundary.}
+\caption{2D density of RT vs.\ error by condition. Trials cluster in the low-RT, low-error region. The near-empty upper-right quadrant (slow and inaccurate) reveals a Pareto-like performance boundary.}
 \label{fig:sat_density}
 \end{figure}
+
+\textbf{H\textsubscript{3} result.} The multiple regression interaction was significant: $\beta_3 = -0.0085$, $t(6759) = -2.28$, $p = .023$. However, the model explains only 2.9\% of variance, so this is a statistically detectable but practically small effect. The visual slope ($b = -0.031$) was steeper than auditory ($b = -0.022$), suggesting that the linear component of the SAT is slightly amplified under visual feedback, but a linear model is not the dominant description of this data.
 
 \textbf{Individual-level cross-condition SAT.} While the population means (H\textsubscript{1}, H\textsubscript{2}) did not differ significantly, the SAT emerges more clearly at the individual level. Figure~\ref{fig:ind_sat} plots each participant's RT change (visual minus auditory) against their error change. The correlation is $r = -0.193$ ($p = .104$, 95\% CI $[-0.41,\ 0.04]$): participants who became faster under visual tended to become slightly less accurate. Though not significant at $\alpha = 0.05$, the direction is consistent with a speed-accuracy tradeoff operating \emph{across conditions within individuals}, even when the population averages wash it out.
 
@@ -320,15 +314,6 @@ The scatter also shows a boundary pattern consistent with the trial-level data: 
 
 Mouse users were 178\,ms faster than trackpad users but had similar hit rates:a device-level SAT. Daily gamers were fast (602\,ms) but had the lowest accuracy (90.7\%), contrary to the expectation that gaming experience uniformly improves performance.
 
-\subsection{Learning Curve}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.75\textwidth]{learning_curve.pdf}
-\caption{Mean RT by trial number within block. Both conditions show early improvement (trials 1--5) and late-block fatigue. The visual advantage is stable throughout.}
-\label{fig:learning}
-\end{figure}
-
 \subsection{Tilt Effect (Error Cascading)}
 
 When a participant missed, the probability of missing the \emph{next} trial was 24.7\% (73/295):compared to just 3.5\% (222/6{,}324) after a hit. That is a \textbf{7$\times$ increase}, $\chi^2(1) = 293.5$, $p < .001$. Errors cascade: a single miss temporarily disrupts focus or motor calibration, triggering further misses. This ``tilt'' effect (borrowing the poker term for emotion-driven errors) operated in both conditions and is visualized in Table~\ref{tab:tilt}.
@@ -351,35 +336,11 @@ Previous = Miss & 222 (75.3\%) & 73 (24.7\%) \\
 
 Figure~\ref{fig:clicks} shows all clicks relative to target center. On misses ($n = 305$), there was a systematic spatial bias: participants clicked 9.1\,px below and 30.3\,px to the right of the target on average. A one-sample $t$-test on the vertical offset confirmed the downward bias was significant ($t = -2.41$, $p = .017$), likely reflecting cursor hotspot position or hand biomechanics. The visual condition produced a wider miss scatter (SD of miss distance: visual $= 73.2$\,px, auditory $= 58.1$\,px), consistent with more impulsive clicking under speed pressure.
 
-Edge targets (distance from canvas center $\geq 150$\,px) were harder: mean RT of 727\,ms vs.\ 666\,ms for center targets ($p < .001$), with a slightly lower hit rate (94.9\% vs.\ 95.8\%). This confirms a Fitts' Law-like effect: greater cursor travel distance increases response time.
+Edge targets (distance from canvas center $\geq 150$\,px) were harder: mean RT of 727\,ms vs.\ 666\,ms for center targets ($p < .001$), with a slightly lower hit rate (94.9\% vs.\ 95.8\%). This confirms a Fitts' Law-like effect. The full click scatter is in Appendix~B (Figure~B.1).
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.85\textwidth]{click_scatter.pdf}
-\caption{All clicks relative to target center, by condition. Dashed circle = 35\,px hit zone. Note the systematic offset on misses and wider scatter under visual feedback.}
-\label{fig:clicks}
-\end{figure}
+\subsection{Additional Controls}
 
-\subsection{Counterbalancing and Block Effects}
-
-Condition order had no significant effect on overall RT: Visual-first $M = 687$\,ms vs.\ Auditory-first $M = 689$\,ms, $t(69.7) = 0.05$, $p = .960$. Counterbalancing was effective.
-
-Block 2 was slightly faster than Block 1 ($684$ vs.\ $692$\,ms, $p = .281$, $d = 0.13$), suggesting a small, non-significant practice effect.
-
-\subsection{Post-Miss Behavior}
-
-When participants missed, their behavior changed on the next trial. Figure~\ref{fig:postmiss} shows how RT evolves in the trials following a miss. Both conditions show elevated RT immediately after a miss, but the visual condition shows a larger slowdown: participants were 65.5\,ms slower after a miss under visual feedback vs.\ only 17.4\,ms under auditory. This suggests visual feedback makes failure more salient, causing a stronger corrective response.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.75\textwidth]{post_miss_rt.pdf}
-\caption{RT trajectory following a miss. Trial 0 = immediately after a miss. Visual participants slow down more, suggesting stronger reaction to failure under visual feedback.}
-\label{fig:postmiss}
-\end{figure}
-
-\subsection{Leaderboard Engagement Effect}
-
-A competitive leaderboard with superlative awards was introduced mid-collection. Post-leaderboard participants were 96\,ms faster ($659$ vs.\ $755$\,ms, $p < .001$) with unchanged accuracy, suggesting that gamification increased engagement without biasing the within-subject feedback comparison.
+Counterbalancing was effective: no significant difference in overall RT between Visual-first ($M = 687$\,ms) and Auditory-first ($M = 689$\,ms) groups, $t(69.7) = 0.05$, $p = .960$. Block 2 was slightly faster than Block 1 ($684$ vs.\ $692$\,ms, $p = .281$, $d = 0.13$). Visual participants slowed down 65.5\,ms after a miss vs.\ only 17.4\,ms for auditory, suggesting visual feedback makes failure more salient (Figure~\ref{fig:postmiss} in Appendix).
 
 
 % ═══ 6. CONCLUSION ════════════════════════════════════════════
@@ -393,16 +354,7 @@ The tilt effect ($\chi^2 = 293.5$, $p < .001$) demonstrates that trial independe
 
 \textbf{Practical implications.} Visual feedback may inadvertently create speed pressure in safety-critical interfaces; auditory feedback may better preserve accuracy.
 
-\textbf{Limitations.} Several factors limit interpretation:
-\begin{itemize}
-  \item \textbf{Weak effects.} H\textsubscript{1} and H\textsubscript{2} were not significant. The 9.7\,ms RT difference and 0.5\,px error difference are small relative to between-participant variability. With $d \approx 0.17$ and $n = 72$, the study was underpowered for these effect sizes (power $\approx 0.30$), increasing Type~II error risk.
-  \item \textbf{Near-ceiling accuracy.} Hit rates of $\sim$95\% left little room for error differences to emerge. A harder task (smaller targets, shorter time limits) might reveal larger accuracy effects.
-  \item \textbf{Linear SAT model.} The RT-vs-error relationship is not cleanly linear ($R^2 = .029$). The significant interaction ($p = .023$) captures a real but small effect. The boundary pattern in the scatter (few slow-and-inaccurate trials) suggests the SAT in this task operates more as a constraint envelope than a linear function.
-  \item \textbf{Convenience sampling.} All participants were 18--24 university students. Results may not generalize to other populations.
-  \item \textbf{Device variability.} Mouse users were 178\,ms faster than trackpad users, introducing noise.
-  \item \textbf{Feedback salience.} The visual border glow is inherently more perceptually salient than a brief tone. Our comparison is between feedback ``as deployed,'' not pure modality. The motivational effect we observed may partly reflect this salience difference.
-  \item \textbf{Leaderboard.} Introduced mid-collection, it increased speed by 96\,ms ($p < .001$). Though accuracy was unchanged and the effect was orthogonal to the within-subject comparison, it may have altered participant motivation.
-\end{itemize}
+\textbf{Limitations.} H\textsubscript{1} and H\textsubscript{2} were not significant ($d \approx 0.17$, power $\approx 0.30$ with $n = 72$), increasing Type~II error risk. Accuracy was near ceiling ($\sim$95\%), leaving little room for error differences. The linear SAT model explains only 2.9\% of variance; the Pareto-like boundary pattern suggests a constraint envelope rather than a linear function. Convenience sampling (all 18--24 university students) limits generalizability. Device variability introduced noise (mouse users 178\,ms faster than trackpad). The visual border glow is inherently more salient than a tone; our results speak to feedback ``as deployed'' rather than pure modality.
 
 \textbf{Lessons learned.} Counterbalancing confirmed no order effect ($p = .960$). Gamification boosted engagement without biasing within-subject comparisons. The gold/green speed indicator, intended as neutral feedback, became a performance incentive, which is itself evidence that visual feedback drives speed-chasing behavior. Future work should manipulate feedback salience independently of modality to disentangle interference and motivational effects.
 
@@ -493,10 +445,36 @@ The tilt effect ($\chi^2 = 293.5$, $p < .001$) demonstrates that trial independe
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{block_comparison.pdf}
-\caption{RT by block. Block 2 was 7.3\,ms faster ($p = .281$, $d = 0.13$).}
+\begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{block_comparison.pdf}
+  \caption{RT by block ($p = .281$, $d = 0.13$).}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{learning_curve.pdf}
+  \caption{RT by trial number within block.}
+\end{subfigure}
+\caption{Block and learning effects.}
 \end{figure}
 
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{post_miss_rt.pdf}
+  \caption{RT trajectory after a miss. Visual participants slow down 65.5\,ms vs.\ 17.4\,ms for auditory.}
+  \label{fig:postmiss}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{rt_after_miss_bar.pdf}
+  \caption{Mean RT after hit vs.\ after miss, by condition.}
+\end{subfigure}
+\caption{Post-miss behavior: visual feedback makes failure more salient.}
+\end{figure}
 
 \section{Experiment Interface}
 
